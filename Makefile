@@ -1,8 +1,8 @@
-CC = g++-6
+CC     = g++-6
 CFLAGS = -g -Wall
-INC = -I inc
-SRCS = main.cpp src/ExifTool.cpp src/ExifToolPipe.cpp src/TagInfo.cpp
-PROG = main
+INC    = -I inc
+SRCS   = main.cpp src/readTags.cpp src/ExifTool.cpp src/ExifToolPipe.cpp src/TagInfo.cpp
+PROG   = main
 
 #OBJ = src/ExifTool.o src/ExifToolPipe.o src/TagInfo.o main.o
 HDR = inc/ExifTool.h inc/ExifToolPipe.h inc/TagInfo.h inc/thermalMetadata.h
