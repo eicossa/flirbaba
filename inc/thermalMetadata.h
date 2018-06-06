@@ -1,6 +1,6 @@
 using namespace std;
 
-class thermalMetadata{
+class exifTagdata{
   double planckr1;
   double planckr2;
   double planckb;
