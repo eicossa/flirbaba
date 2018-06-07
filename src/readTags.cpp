@@ -57,7 +57,8 @@ void readTags(double &planckr1, double &planckr2,
 void readExifTags(const char* imgpath, exifTagdata &exifTagValues)
 {
   // to hold the exiftool tag info
-  double planckr1, planckr2, planckb, planckf, plancko;
+  double planckr1, planckr2;
+  double planckb, planckf, plancko;
   double tref, emis;
   double rawvaluemedian, rawvaluerange;
 
@@ -67,16 +68,6 @@ void readExifTags(const char* imgpath, exifTagdata &exifTagValues)
 
   
 
-  cout << "\n\n\nMetadata read .... " << endl;
-  cout << "PlanckR1 : " << planckr1 << endl;
-  cout << "PlanckR2 : " << planckr2 << endl;
-  cout << "PlanckB : " << planckb << endl;
-  cout << "PlanckF : " << planckf << endl;
-  cout << "PlanckO : " << plancko << endl;
-  cout << "Tref : " << tref << endl;
-  cout << "Emis : " << emis << endl;
-  cout << "RawValueMedian : " << rawvaluemedian << endl;
-  cout << "RawValueRange : " << rawvaluerange << endl;
   
   thermalMetadata tdata(planckr1, planckr2,
 			planckb, planckf, plancko,

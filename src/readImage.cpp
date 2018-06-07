@@ -1,4 +1,7 @@
+#include <string>
+
 using namespace cv;
+using namespace std;
 
 std::string getRGBimgpath()
 {
@@ -24,47 +27,6 @@ std::string getThermalimgErrorMsg()
   return errmsg;
 }
 
-std::string convert2GrayscaleCmdString()
-{
-  std::string cmdString;
-  cmdString = std::string("convert - grayscale:- ");
-  return cmdString;
-}
-
-std::string convert2Grayscale16bitCmdString()
-{
-  std::string cmdString;
-  cmdString = std::string("convert - -depth 16 grayscale:- ");
-  return cmdString;
-}
-
-std::string convert2GrayscaleMSBCmdString()
-{
-  std::string cmdString;
-  cmdString = std::string("convert - -endian msb grayscale:- ");
-  return cmdString;
-}
-
-std::string convert2GrayscaleAutolevelledCmdString()
-{
-  std::string cmdString;
-  cmdString = std::string("convert - -auto-level grayscale:- ");
-  return cmdString; 
-}
-
-std::string convertThermal2Grayscale16MSBAutolevelCmdString()
-{
-  std::string cmdString;
-  cmdString = convert2GrayscaleCmdString()
-            + std::string(" | ")
-            + convert2Grayscale16bitCmdString()
-            + std::string(" | ")
-            + convert2GrayscaleMSBCmdString()
-            + std::string(" | ")
-            + convert2GrayscaleAutolevelledCmdString()
-  return cmdString;
-
-}
 
 std::string extractThermalCmdString()
 {
