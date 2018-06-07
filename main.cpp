@@ -13,24 +13,16 @@
 #include "inc/suitcase.h"
 #include "inc/utilfunc.h"
 
+#include "inc/printStuff.h"
+#include "inc/displayStuff.h"
+
 using namespace std;
 using namespace cv;
 
-void readImageIntoWindow()
-{
-  namedWindow("AJRthermal", 1);
-  imshow("AJRthermal", readRGBImage());
 
-}
 
-void readExifTags()
-{
-  exifTagdata exifTagValues;
-  readExiftoolMetadata(rgbimgpath, exifTagValues);
 
-}
-
-void calcMaxMins()
+void printRawSensorCalcs()
 {
   // separate out the raw thermal data from the FLIR image
   extractRawThermaldata(rgbimgpath, thermdataimgpath);
@@ -44,33 +36,12 @@ void calcMaxMins()
   thermalMetadataValues.printMaxMinTemps();
 }
 
-void loadThermalData()
-{
-  // read in the extracted thermal image bruh
-  readImage(thermdataimgpath.c_str(),
-	    thermalimg,
-	    "problem loading thermal image");
-}
 
-void displayTooltippedImage()
-{
-  suitcase imgnpathdata(rgbimg, rgbimgpath,
-			thermalimg, thermdataimgpath.c_str(),
-			thermalMetadataValues);
-  
-  
-  
-  // set the callback function for any mouse event
-  setMouseCallback("AJRthermal", CallBackFunc, &imgnpathdata);
- 
-  // wait until user press some key
-  waitKey(0);
-}
 
 int main()
 {
-  calcMaxMins(readExifTags(readOriginalImage()));
-  displayTooltippedImage(loadThermalData(extractThermalImage()));
+  //calcMaxMins(readExifTags(readOriginalImage()));
+  //displayTooltippedImage(loadThermalData(extractThermalImage()));
     
   return 0;
 }

@@ -1,0 +1,11 @@
+void printImageSummary()
+{
+
+
+}
+
+void printMaxMinTempsInImage()
+{
+
+
+}

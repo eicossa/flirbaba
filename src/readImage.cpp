@@ -114,3 +114,30 @@ void extractRawThermaldata(const char* imgpath, std::string &rawthermdataimagena
   //rawthermdataimgpath = rawthermdataimagename.c_str();
 }
 
+
+
+
+
+void readImageIntoWindow()
+{
+  namedWindow("AJRthermal", 1);
+  imshow("AJRthermal", readRGBImage());
+
+}
+
+void readExifTags()
+{
+  exifTagdata exifTagValues;
+  readExiftoolMetadata(rgbimgpath, exifTagValues);
+
+}
+
+
+
+void loadThermalData()
+{
+  // read in the extracted thermal image bruh
+  readImage(thermdataimgpath.c_str(),
+	    thermalimg,
+	    "problem loading thermal image");
+}
