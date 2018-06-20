@@ -1,12 +1,13 @@
+#include "inc/flirImg.h"
 #include "inc/printStuff.h"
 #include "inc/displayStuff.h"
 
 int main()
 {
-  //printExifTags();
-  printImageSummary();
-  //calcMaxMins(readExifTags(readOriginalImage()));
-  //displayTooltippedImage(loadThermalData(extractThermalImage()));
+  flirImg img;
+  img = readImage();
+  printImageSummary(img);
+  displayTooltippedImage(img);
     
   return 0;
 }

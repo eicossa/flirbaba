@@ -3,40 +3,15 @@
 using namespace cv;
 using namespace std;
 
-std::string getRGBimgpath()
-{
-  std::string path = "/home/eicossa/Dropbox/nabtd-images/FLIR1097-8/FLIR1097.jpg";
-  return path;
-}
-
-std::string getTHERMimgpath()
-{
-  std::string path = getRGBimgpath() + ".thermout.png";
-  return path;
-}
-
-std::string getRGBimgErrorMsg()
-{
-  std::string errmsg = "problem loading original FLIR img";
-  return errmsg;
-}
-
-std::string getThermalimgErrorMsg()
-{
-  std::string errmsg = "problem loading thermal data from img";
-  return errmsg;
-}
 
 
-std::string extractThermalCmdString()
+
+
+void extractThermalImage()
 {
-  std::string cmdString;
-  cmdString = std::string("exiftool ")
-              + getRGHimgpath()
-              + std::string(" -rawthermalimage -b");
-              + getTHERMimgpath();
-  return cmdString;
+  
 }
+
 
 Mat readRGBImage()
 {
@@ -52,10 +27,6 @@ Mat readRGBImage()
     return imgmat;
 }
 
-void extractThermalImage()
-{
-  
-}
 
 Mat readThermalImage()
 {

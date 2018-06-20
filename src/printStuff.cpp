@@ -4,7 +4,7 @@ using namespace std;
 
 void printThermalTags(double planckr1, double planckr2,
               	      double planckb, double planckf, double plancko,
-		      double tref, double emis,
+		      double tref,           double emis,
 		      double rawvaluemedian, double rawvaluerange)
 {
   cout << "\n\n\nExiftags read .... "           << endl;
@@ -19,7 +19,7 @@ void printThermalTags(double planckr1, double planckr2,
   cout << "RawValueRange  : " << rawvaluerange  << endl;
 }
 
-void printRawSensorCalcs()
+static void printRawSensorCalcs()
 {
   // separate out the raw thermal data from the FLIR image
   extractRawThermaldata(rgbimgpath, thermdataimgpath);
@@ -30,20 +30,20 @@ void printRawSensorCalcs()
 }
 
 
-void printImageSummary()
+static void printImageSummary()
 {
   readExifTags();
 
 }
 
-void printMaxMinTempsInImage()
+static void printMaxMinTempsInImage()
 {
 
 
 }
 
 
-void thermalMetadata::printRaws()
+static void thermalMetadata::printRaws()
 {
   cout << "\n\n\nRaws calculated" << endl;
   cout << "RAWmax         : "     << rawmax << endl;
@@ -66,7 +66,7 @@ void thermalMetadata::printRaws()
 }
 
 
-void thermalMetadata::printMaxMinTemps()
+static void thermalMetadata::printMaxMinTemps()
 {
   cout << "\n\n\nDiffs calculated" << endl;
   cout << "Tmin    : "             << tmin  << endl;
@@ -79,7 +79,7 @@ void thermalMetadata::printMaxMinTemps()
 
 
 
-void thermalMetadata::printThermalTags()
+static void thermalMetadata::printThermalTags()
 {
 
   cout << "\n\n\nMetadata delivered " << endl;
@@ -94,5 +94,3 @@ void thermalMetadata::printThermalTags()
   cout << "RawValueRange : "          << rawvaluerange << endl;
 
 }
-
-

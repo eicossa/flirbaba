@@ -1,15 +1,18 @@
-void displayImageWithTempsOnMouseover()
+#include "../inc/suitcase.h"
+using namespace std;
+
+static void displayImageWithTempsOnMouseover()
 {
 
 }
 
-void displayImageWithRAWOnMouseover()
+static void displayImageWithRAWOnMouseover()
 {
 
 
 }
 
-void displayImageWithCompleteCalcsOnMouseover()
+static void displayImageWithCompleteCalcsOnMouseover()
 {
 
 
