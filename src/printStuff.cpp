@@ -2,21 +2,18 @@
 #include "../inc/printStuff.h"
 using namespace std;
 
-void printThermalTags(double planckr1, double planckr2,
-              	      double planckb, double planckf, double plancko,
-		      double tref,           double emis,
-		      double rawvaluemedian, double rawvaluerange)
+void printThermalTags()
 {
-  cout << "\n\n\nExiftags read .... "           << endl;
-  cout << "PlanckR1       : " << planckr1       << endl;
-  cout << "PlanckR2       : " << planckr2       << endl;
-  cout << "PlanckB        : " << planckb        << endl;
-  cout << "PlanckF        : " << planckf        << endl;
-  cout << "PlanckO        : " << plancko        << endl;
-  cout << "Tref           : " << tref           << endl;
-  cout << "Emis           : " << emis           << endl;
-  cout << "RawValueMedian : " << rawvaluemedian << endl;
-  cout << "RawValueRange  : " << rawvaluerange  << endl;
+  cout << "\n\n\nExiftags read .... "                << endl;
+  cout << "PlanckR1       : " << getPlanckR1()       << endl;
+  cout << "PlanckR2       : " << getPlanckR2()       << endl;
+  cout << "PlanckB        : " << getPlanckB()        << endl;
+  cout << "PlanckF        : " << getPlanckF()        << endl;
+  cout << "PlanckO        : " << getPlanckO()        << endl;
+  cout << "Tref           : " << getTref()           << endl;
+  cout << "Emis           : " << getEmis()           << endl;
+  cout << "RawValueMedian : " << getRawValueMedian() << endl;
+  cout << "RawValueRange  : " << getRawValueRange()  << endl;
 }
 
 static void printRawSensorCalcs()
@@ -43,54 +40,30 @@ static void printMaxMinTempsInImage()
 }
 
 
-static void thermalMetadata::printRaws()
+static void printRaws()
 {
   cout << "\n\n\nRaws calculated" << endl;
-  cout << "RAWmax         : "     << rawmax << endl;
-  cout << "RAWmin         : "     << rawmin << endl;
-  cout << "RAWrefl        : "     << rawrefl << endl;
-  cout << "RAWmaxobj      : "     << rawmaxobj << endl;
-  cout << "RAWminobj      : "     << rawminobj << endl;
-  //cout << "Tref           : "     << tref << endl;
-  //cout << "Emis           : "     << emis << endl;
-  cout << "RawValueMedian : "     << rawvaluemedian << endl;
-  cout << "RawValueRange  : "     << rawvaluerange << endl;
-  
-
-  cout << "RAWmax    : " << rawmax  << endl;
-  cout << "RAWmin    : " << rawmax  << endl;
-  cout << "RAWrefl   : " << rawrefl << endl;
-  cout << "RAWmaxobj : " << rawrefl << endl;
-  cout << "RAWminobj : " << rawrefl << endl;
-
+  cout << "RAWmax         : "     << getRAWmax()         << endl;
+  cout << "RAWmin         : "     << getRAWmin()         << endl;
+  cout << "RAWrefl        : "     << getRAWrefl()        << endl;
+  cout << "RAWmaxobj      : "     << getRAWmaxobj()      << endl;
+  cout << "RAWminobj      : "     << getRAWminobj()      << endl;
+  cout << "Tref           : "     << getTref()           << endl;
+  cout << "Emis           : "     << getEmis()           << endl;
+  cout << "RawValueMedian : "     << getRAWvaluemedian() << endl;
+  cout << "RawValueRange  : "     << getRAWvaluerange()  << endl;
 }
 
 
-static void thermalMetadata::printMaxMinTemps()
+static void printMaxMinTemps()
 {
   cout << "\n\n\nDiffs calculated" << endl;
-  cout << "Tmin    : "             << tmin  << endl;
-  cout << "Tmax    : "             << tmax  << endl;
-  cout << "Smax    : "             << Smax  << endl;
-  cout << "Smin    : "             << Smin  << endl;
-  cout << "Sdelta  : "             << Sdelta << endl;
-
+  cout << "Tmin    : "             << getTmin()   << endl;
+  cout << "Tmax    : "             << getTmax()   << endl;
+  cout << "Smax    : "             << getSmax()   << endl;
+  cout << "Smin    : "             << getSmin()   << endl;
+  cout << "Sdelta  : "             << getSdelta() << endl;
 }
 
 
 
-static void thermalMetadata::printThermalTags()
-{
-
-  cout << "\n\n\nMetadata delivered " << endl;
-  cout << "PlanckR1 : "               << planckr1 << endl;
-  cout << "PlanckR2 : "               << planckr2 << endl;
-  cout << "PlanckB : "                << planckb << endl;
-  cout << "PlanckF : "                << planckf << endl;
-  cout << "PlanckO : "                << plancko << endl;
-  cout << "Tref : "                   << tref << endl;
-  cout << "Emis : "                   << emis << endl;
-  cout << "RawValueMedian : "         << rawvaluemedian << endl;
-  cout << "RawValueRange : "          << rawvaluerange << endl;
-
-}

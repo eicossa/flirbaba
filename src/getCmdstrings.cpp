@@ -5,13 +5,8 @@
 #include <stdexcept>
 #include <string>
 #include <array>
-
-#include "opencv2/highgui/highgui.hpp"
-
-
 #include "../inc/getPaths.hpp"
 #include "../inc/ExifTool.h"
-#include "../inc/thermalMetadata.h"
 #include "../inc/suitcase.h"
 #include "../inc/utilfunc.h"
 
@@ -57,7 +52,6 @@ std::string convertThermal2Grayscale16MSBAutolevelCmdString()
             + std::string(" | ")
             + convert2GrayscaleAutolevelledCmdString();
   return cmdString;
-
 }
 
 

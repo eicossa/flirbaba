@@ -1,30 +1,58 @@
-void thermalMetadata::calculateRaws()
+#include "../inc/readTags.hpp"
+
+
+double calcRAWmax()
 {
-  rawmax  = rawvaluemedian + (rawvaluerange/2);
-  
-  rawmin = rawmax - rawvaluerange;
-  cout << "RAWmax    : " << rawmax  << endl;
-  cout << "RAWmin    : " << rawmax  << endl;
-  cout << "RAWrefl   : " << rawrefl << endl;
-  cout << "RAWmaxobj : " << rawrefl << endl;
-  cout << "RAWminobj : " << rawrefl << endl;
+  double rawvaluemedian, rawvaluerange, rawmax;
+  rawvaluemedian = getRAWvaluemedian();
+  rawvaluerange  = getRAWvaluerange();
 
-  double t11 = ((planckb) / (tref + 273.15)) - planckf;
-  double t12 = planckr2 * exp(t11);
-  double t13 = planckr1/t12;
-  
-  rawrefl = t13 - plancko;
-  
-
-  rawmaxobj = (rawmax - (1-emis)*rawrefl)/emis;
-  
-  rawminobj = (rawmin - (1-emis)*rawrefl)/emis;
-  
+  rawmax = rawvaluemedian + (rawvaluerange/2);
+  return rawmax;
 }
 
+double calcRAWmin()
+{
+  double rawmax, rawvaluerange, rawmin;
+  rawmax        = calcRAWmax();
+  rawvaluerange = getRAWvaluerange();
 
+  rawmin = rawmax - rawvaluerange;
+  return rawmin;
+}
 
-void thermalMetadata::calculateMaxMinTemperatures()
+double calcRAWrefl()
+{
+  double planckr1, planckr2;
+  double planckb, planckf;
+  double tref;
+  double rawrefl;
+
+  double t11, t12, t13, t14;
+
+  planckr1 = getPlanckR1();
+  planckr2 = getPlanckR2();
+  planckb  = getPlanckB();
+  planckf  = getPlanckF();
+  tref     = getTref();
+  
+  t11 = ((planckb) / (tref + 273.15));
+  t12 = t11 - planckf;
+  t13 = planckr2 * exp(t11);
+  t14 = planckr1/t12;
+  
+  rawrefl = t13 - plancko;
+  return rawrefl;
+
+}
+
+double calcRAWmaxobj()
+{
+  rawmaxobj = (rawmax - (1-emis)*rawrefl)/emis;
+  rawminobj = (rawmin - (1-emis)*rawrefl)/emis;  
+}
+
+void calculateMaxMinTemperatures()
 {
   double t21 = (planckr2 * (rawminobj + plancko) + planckf);
   cout << " Tmin t21 : " << t21 << endl;
@@ -72,11 +100,8 @@ void thermalMetadata::calculateMaxMinTemperatures()
 
 
 
-double thermalMetadata::calculateTemperature(double thermalintensityvalue)
+double calculateTemperature(double thermalintensityvalue)
 {
-  
-
-  
   double t61 = (65535 * thermalintensityvalue + plancko);
   double t62 = planckr2 * t61;
   double t63 = planckr1/(t62 + planckf);
