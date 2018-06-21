@@ -1,15 +1,31 @@
-CC     = g++-6
-CFLAGS = -g -Wall
-INC    = -I inc
-SRCS   = main.cpp src/readTags.cpp src/ExifTool.cpp src/ExifToolPipe.cpp src/TagInfo.cpp
-PROG   = main
+CC        = g++-6
+CFLAGS    = -g -Wall
+EXIFFLAGS = -c
+INC       = -I inc/
+EXEC      = flirbaba
+OBJ       = src/ExifTool.o src/ExifToolPipe.o src/TagInfo.o main.o
+OPENCVLIB = `pkg-config opencv --cflags --libs`
 
-#OBJ = src/ExifTool.o src/ExifToolPipe.o src/TagInfo.o main.o
-HDR = inc/utilfunc.h inc/ExifTool.h inc/ExifToolPipe.h inc/TagInfo.h inc/thermalMetadata.h
+all       : everything
+flirbaba  : flirbaba.o 
+exif      : ExifTool.o ExifToolPipe.o TagInfo.o
 
-OPENCV = `pkg-config opencv --cflags --libs`
-#EXIFTOOL = -I/inc/ExifTool.h -I/inc/ExifToolPipe.h -I/inc/TagInfo.h -L/src/ExifTool.o -L/src/ExifToolPipe.o -L/src/ExifTaginfo.o
-#LIBS = $(OPENCV) $(EXIFTOOL)
+ALLSRCS   = ${MAINSRCS} ${EXIFSRCS} ${OTHRSRCS}
+MAINSRCS  = main.cpp
+OTHRSRCS  = src/*.cpp
 
-$(PROG):main.o $(OBJ)
-	$(CC) $(CFLAGS) -o $(PROG) $(SRCS) $(INC) $(OPENCV)
+EXIFSRCS  = src/exiftool/*.cpp
+EXIFOBJS  = ExifTool.o ExifToolPipe.o TagInfo.o
+
+ExifTool.o : src/exiftool/ExifTool.cpp
+	$(CC) $(EXIFFLAGS) -o obj/ExifTool.o ${INC} src/exiftool/ExifTool.cpp
+ExifToolPipe.o : src/exiftool/ExifToolPipe.cpp
+	$(CC) $(EXIFFLAGS) -o obj/ExifToolPipe.o ${INC} src/exiftool/ExifToolPipe.cpp
+TagInfo.o : src/exiftool/TagInfo.cpp
+	$(CC) $(EXIFFLAGS) -o obj/TagInfo.o ${INC} src/exiftool/TagInfo.cpp
+
+flirbaba.o : ${MAINSRCS} ${OTHRSRCS} ${EXIFSRCS}
+	$(CC) -o obj/flirbaba ${INC} ${MAINSRCS} ${OTHRSRCS} ${EXIFSRCS} ${OPENCVLIB}
+
+everything : flirbaba ${EXIFOBJS}
+	${CC} ${CFLAGS} -o ${EXEC} ${ALLSRCS} ${INC} ${OPENCVLIB}
