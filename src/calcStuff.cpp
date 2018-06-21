@@ -48,8 +48,22 @@ double calcRAWrefl()
 
 double calcRAWmaxobj()
 {
+  double rawmaxobj, rawmax, emis, rawrefl;
+  rawmax    = calcRAWmax();
+  emis      = getEmis();
+  rawrefl   = calcRAWrefl();
   rawmaxobj = (rawmax - (1-emis)*rawrefl)/emis;
-  rawminobj = (rawmin - (1-emis)*rawrefl)/emis;  
+  return rawmaxobj;
+}
+
+double calcRAWminobj()
+{
+  double rawminobj, rawmin, emis, rawrefl;
+  rawmin    = calcRAWmin();
+  emis      = getEmis();
+  rawrefl   = calcRAWrefl();
+  rawminobj = (rawmin - (1-emis)*rawrefl)/emis;
+  return rawminobj;
 }
 
 void calculateMaxMinTemperatures()
