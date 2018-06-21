@@ -191,27 +191,41 @@ double calcSdelta()
 
 double calculateTemperature(double thermalintensityvalue)
 {
-  double t61 = (65535 * thermalintensityvalue + plancko);
-  double t62 = planckr2 * t61;
-  double t63 = planckr1/(t62 + planckf);
-  double t64 = log(t63);
-  double t65 = t64 - Smin;
-  double t66 = planckb/t65;
-  double t67 = t66/Sdelta;
+  double planckr1, planckr2;
+  double planckb, planckf, plancko;
+  double Smin, Sdelta;
 
-  cout<<" ... for thermal intensity of " << thermalintensityvalue << endl;
-  cout<<" ... Exif Consts  " << planckr1 << " "
-                             << planckr2 << " "
-                             << planckb  << " "
-                             << planckf  << " "
-                             << plancko  <<endl;
-  cout<<" ... Intermed temps  " << t61 << " | "
-                                << t62 << " | "
-                                << t63 << " | "
-                                << t64 << " | "
-                                << t65 << " | "
-                                << t66 << " | "
-                                << endl;
-  cout<<" ... " << endl;
+  double t61, t62, t63, t64, t65, t66;
+
+  planckr1  = getPlanckR1();
+  planckr2  = getPlanckR2();
+  planckb   = getPlanckB();
+  planckf   = getPlanckF();
+  plancko   = getPlanckO();
+  Smin      = calcSmin();
+  Sdelta    = calcSdelta();
+  
+  t61 = (65535 * thermalintensityvalue + plancko);
+  t62 = planckr2 * t61;
+  t63 = planckr1/(t62 + planckf);
+  t64 = log(t63);
+  t65 = t64 - Smin;
+  t66 = planckb/t65;
+  t67 = t66/Sdelta;
+
+  //cout<<" ... for thermal intensity of " << thermalintensityvalue << endl;
+  //cout<<" ... Exif Consts  " << planckr1 << " "
+  //                           << planckr2 << " "
+  //                           << planckb  << " "
+  //                           << planckf  << " "
+  //                           << plancko  <<endl;
+  //cout<<" ... Intermed temps  " << t61 << " | "
+  //                              << t62 << " | "
+  //                              << t63 << " | "
+  //                              << t64 << " | "
+  //                              << t65 << " | "
+  //                              << t66 << " | "
+  //                              << endl;
+  //cout<<" ... " << endl;
   return t67;
 }
