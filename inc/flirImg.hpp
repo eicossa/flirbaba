@@ -22,5 +22,10 @@ public:
   }
 
   flirImg readRGBImage();
+  void    printImageSummary();
+  void    printExifThermalTags();
+  void    calcRaws();
+  void    printMaxMinTemps();
+  void    printSes();
 
 };

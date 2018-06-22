@@ -4,19 +4,21 @@ EXIFFLAGS = -c
 INC       = -I inc/
 OPENCVLIB = `pkg-config opencv --cflags --libs`
 
-flirbaba  : flirbaba.o 
-#exif      : ExifTool.o ExifToolPipe.o TagInfo.o
+all        : flirbaba exif
+exif      :  ExifTool.o ExifToolPipe.o TagInfo.o
 
-ALLSRCS   = ${MAINSRCS} ${EXIFSRCS} ${OTHRSRCS}
+ALLSRCS   = ${MAINSRCS} ${OTHRSRCS}
 MAINSRCS  = main.cpp
 OTHRSRCS  = src/*.cpp
-EXIFSRCS  = src/exiftool/*.cpp
 
-#ExifTool.o : src/exiftool/ExifTool.cpp
-#	$(CC) $(EXIFFLAGS) -o obj/ExifTool.o ${INC} src/exiftool/ExifTool.cpp
-#ExifToolPipe.o : src/exiftool/ExifToolPipe.cpp
-#	$(CC) $(EXIFFLAGS) -o obj/ExifToolPipe.o ${INC} src/exiftool/ExifToolPipe.cpp
-#TagInfo.o : src/exiftool/TagInfo.cpp
-#	$(CC) $(EXIFFLAGS) -o obj/TagInfo.o ${INC} src/exiftool/TagInfo.cpp
-flirbaba.o : ${ALLSRCS}
-	$(CC) ${INC} -o flirbaba.o ${ALLSRCS} ${OPENCVLIB}
+EXIFSRCS  = src/exiftool/*.cpp
+EXIFOBJS  = obj/ExifTool.o obj/ExifToolPipe.o obj/TagInfo.o
+
+ExifTool.o : src/exiftool/ExifTool.cpp
+	$(CC) $(EXIFFLAGS) -o obj/ExifTool.o ${INC} src/exiftool/ExifTool.cpp
+ExifToolPipe.o : src/exiftool/ExifToolPipe.cpp
+	$(CC) $(EXIFFLAGS) -o obj/ExifToolPipe.o ${INC} src/exiftool/ExifToolPipe.cpp
+TagInfo.o : src/exiftool/TagInfo.cpp
+	$(CC) $(EXIFFLAGS) -o obj/TagInfo.o ${INC} src/exiftool/TagInfo.cpp
+flirbaba   : ${ALLSRCS} ${EXIFOBJS}
+	$(CC) ${INC} -o flirbaba ${EXIFOBJS} ${ALLSRCS} ${OPENCVLIB}

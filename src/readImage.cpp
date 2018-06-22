@@ -25,10 +25,12 @@ flirImg flirImg::readRGBImage()
     if ( imgmat.empty() ) { 
       cout << getRGBimgErrorMsg() << imgpath << endl;
       exit;
+    } else{
+      cout << "Successfully read in "
+	   << getRGBimgpath() << endl;
     }
     
     img.setOpencvMat(imgmat);
-    
     return img;
 }
 
