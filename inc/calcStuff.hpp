@@ -1,0 +1,11 @@
+double calcRAWmax();
+double calcRAWmin();
+double calcRAWrefl();
+double calcRAWmaxobj();
+double calcRAWminobj();
+double calcTmin();
+double calcTmax();
+double calcSmax();
+double calcSmin();
+double calcSdelta();
+double calculateTemperature(double);
