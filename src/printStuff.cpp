@@ -1,5 +1,7 @@
 #include <iostream>
-#include "../inc/printStuff.h"
+#include "../inc/printStuff.hpp"
+#include "../inc/readTags.hpp"
+#include "../inc/calcStuff.hpp"
 using namespace std;
 
 void printThermalTags()
@@ -12,42 +14,42 @@ void printThermalTags()
   cout << "PlanckO        : " << getPlanckO()        << endl;
   cout << "Tref           : " << getTref()           << endl;
   cout << "Emis           : " << getEmis()           << endl;
-  cout << "RawValueMedian : " << getRawValueMedian() << endl;
-  cout << "RawValueRange  : " << getRawValueRange()  << endl;
+  cout << "RawValueMedian : " << getRAWvaluemedian() << endl;
+  cout << "RawValueRange  : " << getRAWvaluerange()  << endl;
 }
 
 static void printRawSensorCalcs()
 {
   // separate out the raw thermal data from the FLIR image
-  extractRawThermaldata(rgbimgpath, thermdataimgpath);
+  //extractRawThermaldata(rgbimgpath, thermdataimgpath);
 
-  printThermalTags();
-  printMaxMinRAW();
-  printMaxMinTempsInImage();
+  //printThermalTags();
+  //printMaxMinRAW();
+  //printMaxMinTempsInImage();
 }
 
 
-static void printImageSummary()
-{
-  readExifTags();
+// static void printImageSummary()
+// {
+//   readExifTags();
 
-}
+// }
 
-static void printMaxMinTempsInImage()
-{
+// static void printMaxMinTempsInImage()
+// {
 
 
-}
+// }
 
 
 static void printRaws()
 {
   cout << "\n\n\nRaws calculated" << endl;
-  cout << "RAWmax         : "     << getRAWmax()         << endl;
-  cout << "RAWmin         : "     << getRAWmin()         << endl;
-  cout << "RAWrefl        : "     << getRAWrefl()        << endl;
-  cout << "RAWmaxobj      : "     << getRAWmaxobj()      << endl;
-  cout << "RAWminobj      : "     << getRAWminobj()      << endl;
+  cout << "RAWmax         : "     << calcRAWmax()         << endl;
+  cout << "RAWmin         : "     << calcRAWmin()         << endl;
+  cout << "RAWrefl        : "     << calcRAWrefl()        << endl;
+  cout << "RAWmaxobj      : "     << calcRAWmaxobj()      << endl;
+  cout << "RAWminobj      : "     << calcRAWminobj()      << endl;
   cout << "Tref           : "     << getTref()           << endl;
   cout << "Emis           : "     << getEmis()           << endl;
   cout << "RawValueMedian : "     << getRAWvaluemedian() << endl;
@@ -58,11 +60,11 @@ static void printRaws()
 static void printMaxMinTemps()
 {
   cout << "\n\n\nDiffs calculated" << endl;
-  cout << "Tmin    : "             << getTmin()   << endl;
-  cout << "Tmax    : "             << getTmax()   << endl;
-  cout << "Smax    : "             << getSmax()   << endl;
-  cout << "Smin    : "             << getSmin()   << endl;
-  cout << "Sdelta  : "             << getSdelta() << endl;
+  cout << "Tmin    : "             << calcTmin()   << endl;
+  cout << "Tmax    : "             << calcTmax()   << endl;
+  cout << "Smax    : "             << calcSmax()   << endl;
+  cout << "Smin    : "             << calcSmin()   << endl;
+  cout << "Sdelta  : "             << calcSdelta() << endl;
 }
 
 

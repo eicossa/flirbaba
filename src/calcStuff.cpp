@@ -1,5 +1,5 @@
 #include <iostream>
-#include <math>
+#include <cmath>
 #include "../inc/readTags.hpp"
 
 using namespace std;
@@ -27,7 +27,7 @@ double calcRAWmin()
 double calcRAWrefl()
 {
   double planckr1, planckr2;
-  double planckb, planckf;
+  double planckb, planckf, plancko;
   double tref;
   double rawrefl;
 
@@ -37,6 +37,7 @@ double calcRAWrefl()
   planckr2 = getPlanckR2();
   planckb  = getPlanckB();
   planckf  = getPlanckF();
+  plancko  = getPlanckO();
   tref     = getTref();
   
   t11 = ((planckb) / (tref + 273.15));
@@ -124,11 +125,12 @@ double calcTmax()
 }
 
 
-void calcSmax()
+double calcSmax()
 {
   double planckr1, planckr2;
   double planckb, planckf, plancko;
   double rawmax;
+  double Smax;
   double t41, t42, t43;
 
   planckr1  = getPlanckR1();
@@ -139,11 +141,11 @@ void calcSmax()
   rawmax    = calcRAWmax();
 
   
-  double t41 = planckr2 * (rawmax + plancko);
+  t41 = planckr2 * (rawmax + plancko);
   //cout << " Smax t41 : " << t41 << endl;
-  double t42 = ((planckr1/t41) + planckf);
+  t42 = ((planckr1/t41) + planckf);
   //cout << " Smax t42 : " << t42 << endl;
-  double t43 = log(t42);
+  t43 = log(t42);
   //cout << " Smax t43 : " << t43 << endl;
   
   Smax = planckb / t43;
@@ -156,6 +158,7 @@ double calcSmin()
   double planckr1, planckr2;
   double planckb, planckf, plancko;
   double rawmin;
+  double Smin;
   double t51, t52, t53;
 
   planckr1  = getPlanckR1();
@@ -195,7 +198,7 @@ double calculateTemperature(double thermalintensityvalue)
   double planckb, planckf, plancko;
   double Smin, Sdelta;
 
-  double t61, t62, t63, t64, t65, t66;
+  double t61, t62, t63, t64, t65, t66, t67;
 
   planckr1  = getPlanckR1();
   planckr2  = getPlanckR2();

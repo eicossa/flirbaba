@@ -1,14 +1,14 @@
 #include <iostream>
 #include <cstdio>
-#include <stdio>
+#include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <array>
 #include "../inc/getPaths.hpp"
+#include "../inc/suitcase.hpp"
+#include "../inc/utilfunc.hpp"
 #include "../inc/ExifTool.h"
-#include "../inc/suitcase.h"
-#include "../inc/utilfunc.h"
 
 using namespace std;
 using namespace cv;

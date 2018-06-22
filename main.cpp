@@ -1,11 +1,12 @@
-#include "inc/flirImg.h"
-#include "inc/printStuff.h"
-#include "inc/displayStuff.h"
+#include "inc/flirImg.hpp"
+#include "inc/readImage.hpp"
+#include "inc/printStuff.hpp"
+#include "inc/displayStuff.hpp"
 
 int main()
 {
   flirImg img;
-  img = readImage();
+  img = readRGBImage();
   printImageSummary(img);
   displayTooltippedImage(img);
     
