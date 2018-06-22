@@ -1,5 +1,5 @@
 CC        = g++-6
-CFLAGS    = -g -Wall
+CFLAGS    = -g -Wall -std=c++11
 EXIFFLAGS = -c
 INC       = -I inc/
 EXEC      = flirbaba

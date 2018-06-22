@@ -7,8 +7,8 @@ int main()
 {
   flirImg img;
   img = readRGBImage();
-  printImageSummary(img);
-  displayTooltippedImage(img);
+  //printImageSummary(img);
+  //displayTooltippedImage(img);
     
   return 0;
 }

@@ -1,15 +1,25 @@
+#include <stdio.h>
 #include <iostream>
-#include "../inc/thermalMetadata.hpp"
+#include <cstdio>
+#include <memory>
+#include <stdexcept>
+#include <string>
+//#include <array>
+//#include "opencv2/opencv.hpp"
+
+//#include "../inc/thermalMetadata.hpp"
 #include "../inc/ExifTool.h"
 #include "../inc/getPaths.hpp"
-#include "../inc/ExifToolPipe.h"
-#include "../inc/TagInfo.h"
-#include <iostream>
+#include "../inc/utilfunc.hpp"
+//#include "../inc/ExifToolPipe.h"
+//#include "../inc/TagInfo.h"
 using namespace std;
+//using namespace cv;
 
 double getExiftoolTagInfo(std::string tagname)
 {
   std::string imgpath;
+  std::string readtaglist;
   imgpath = getRGBimgpath();
   // create our ExifTool objetc
   ExifTool *et = new ExifTool();
@@ -18,7 +28,8 @@ double getExiftoolTagInfo(std::string tagname)
   
   if (info) {
     for (TagInfo *i=info; i; i=i->next) {
-      if(!ci_find_substr( i->name , tagname)){
+      readtaglist = std::string(i->name);
+      if(!ci_find_substr( readtaglist, tagname)){
 	//cout << tagname << " : " << i-> value << endl;
         return stod(i->value);
       } 

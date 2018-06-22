@@ -1,3 +1,6 @@
+
+
+
 class imgExifThermalTags{
   double planckr1;
   double planckr2;

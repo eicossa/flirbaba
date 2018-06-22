@@ -60,7 +60,7 @@ std::string extractThermalCmdString()
   std::string cmdString;
   cmdString = std::string("exiftool ")
               + getRGBimgpath()
-              + std::string(" -rawthermalimage -b");
+              + std::string(" -rawthermalimage -b")
               + getTHERMimgpath();
   return cmdString;
 }
