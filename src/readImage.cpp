@@ -1,29 +1,35 @@
 #include <string>
 #include <iostream>
 #include "../inc/calcStuff.hpp"
+#include "../inc/getPaths.hpp"
+#include "../inc/getErrmsg.hpp"
+#include "../inc/flirImg.hpp"
 using namespace std;
 #include <opencv2/opencv.hpp>
 using namespace cv;
 
 
-void extractThermalImage()
-{
-  
-}
 
 
-Mat readRGBImage()
+flirImg flirImg::readRGBImage()
 {
+    flirImg     img;
+    Mat         imgmat;
+    std::string imgpath;
+
+    imgpath = getRGBimgpath();
     // read image from file 
-    //imgmat = imread(getRGBimgpath());
+    imgmat = imread(imgpath);
  
     // if fail to read the image
-    //if ( imgmat.empty() ) 
-    //{ 
-      //cout << getRGBimgErrorMsg() << imgpath << endl;
-      //exit;
-      //}
-      //return imgmat;
+    if ( imgmat.empty() ) { 
+      cout << getRGBimgErrorMsg() << imgpath << endl;
+      exit;
+    }
+    
+    img.setOpencvMat(imgmat);
+    
+    return img;
 }
 
 
@@ -47,6 +53,10 @@ void extractRawThermaldata(const char* imgpath, std::string &rawthermdataimagena
 }
 
 
+void extractThermalImage()
+{
+  
+}
 
 
 

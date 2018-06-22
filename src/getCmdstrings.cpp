@@ -7,7 +7,7 @@
 #include <array>
 #include "../inc/getPaths.hpp"
 #include "../inc/suitcase.hpp"
-#include "../inc/utilfunc.hpp"
+//#include "../inc/utilfunc.hpp"
 #include "../inc/ExifTool.h"
 
 using namespace std;

@@ -15,4 +15,12 @@ class flirImg{
 
   Mat                opencvimg;
 
+public: 
+  void setOpencvMat(Mat &imgmat)
+  {
+    this->opencvimg = imgmat;
+  }
+
+  flirImg readRGBImage();
+
 };
