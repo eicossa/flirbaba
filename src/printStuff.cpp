@@ -70,7 +70,6 @@ void flirImg::printSes()
   cout << "Smax    : "             << calcSmax()   << endl;
   cout << "Smin    : "             << calcSmin()   << endl;
   cout << "Sdelta  : "             << calcSdelta() << endl;
-
 }
 
 

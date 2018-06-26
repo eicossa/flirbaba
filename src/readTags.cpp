@@ -4,19 +4,13 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
-//#include <array>
-//#include "opencv2/opencv.hpp"
-
-//#include "../inc/thermalMetadata.hpp"
 #include "../inc/ExifTool.h"
 #include "../inc/getPaths.hpp"
 #include "../inc/utilfunc.hpp"
-//#include "../inc/ExifToolPipe.h"
-//#include "../inc/TagInfo.h"
+#include "../inc/flirImg.hpp"
 using namespace std;
-//using namespace cv;
 
-double getExiftoolTagInfo(std::string tagname)
+double flirImg::getExiftoolTagInfo(std::string tagname)
 {
   std::string imgpath;
   std::string readtaglist;
@@ -44,40 +38,14 @@ double getExiftoolTagInfo(std::string tagname)
 
 
 
-double getPlanckR1() { return getExiftoolTagInfo("PlanckR1"); }
-double getPlanckR2() { return getExiftoolTagInfo("PlanckR2"); }
-double getPlanckB() { return getExiftoolTagInfo("PlanckB"); }
-double getPlanckF() { return getExiftoolTagInfo("PlanckF"); }
-double getPlanckO() { return getExiftoolTagInfo("PlanckO"); }
-double getTref() { return getExiftoolTagInfo("Tref"); }
-double getEmis() { return getExiftoolTagInfo("Emis"); }
-double getRAWvaluerange() { return getExiftoolTagInfo("RAWvaluerange"); }
-double getRAWvaluemedian() { return getExiftoolTagInfo("RAWvaluemedian"); }
+double flirImg::getPlanckR1() { return getExiftoolTagInfo("PlanckR1"); }
+double flirImg::getPlanckR2() { return getExiftoolTagInfo("PlanckR2"); }
+double flirImg::getPlanckB() { return getExiftoolTagInfo("PlanckB"); }
+double flirImg::getPlanckF() { return getExiftoolTagInfo("PlanckF"); }
+double flirImg::getPlanckO() { return getExiftoolTagInfo("PlanckO"); }
+double flirImg::getTref() { return getExiftoolTagInfo("Tref"); }
+double flirImg::getEmis() { return getExiftoolTagInfo("Emis"); }
+double flirImg::getRAWvaluerange() { return getExiftoolTagInfo("RAWvaluerange"); }
+double flirImg::getRAWvaluemedian() { return getExiftoolTagInfo("RAWvaluemedian"); }
 
 
-// void readExifTags(const char* imgpath, exifTagdata &exifTagValues)
-// {
-//   // to hold the exiftool tag info
-//   double planckr1, planckr2;
-//   double planckb, planckf, plancko;
-//   double tref, emis;
-//   double rawvaluemedian, rawvaluerange;
-
-//   readTags(planckr1, planckr2, planckb, planckf, plancko,
-// 	   tref, emis,
-// 	   rawvaluemedian, rawvaluerange);
-
-  
-
-  
-//   thermalMetadata tdata(planckr1, planckr2,
-// 			planckb, planckf, plancko,
-// 			tref, emis,
-// 			rawvaluemedian, rawvaluerange);
-//   thermalMetadataValues = tdata;
-  
-//   // print exiftool stderr messages
-//   char *err = et->GetError();
-//   if (err) cerr << err;
-//   delete et;      // delete our ExifTool object
-// }

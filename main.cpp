@@ -6,8 +6,8 @@
 int main()
 {
   flirImg img;
-  img.readRGBImage();
-  img.printImageSummary();
+  //img.readRGBImage();
+  //img.printImageSummary();
   //img.displayTooltippedImage();
     
   return 0;

@@ -1,10 +1,11 @@
 #include <iostream>
 #include <cmath>
 #include "../inc/readTags.hpp"
+#include "../inc/flirImg.hpp"
 
 using namespace std;
 
-double calcRAWmax()
+double flirImg::calcRAWmax()
 {
   double rawvaluemedian, rawvaluerange, rawmax;
   rawvaluemedian = getRAWvaluemedian();
@@ -14,7 +15,7 @@ double calcRAWmax()
   return rawmax;
 }
 
-double calcRAWmin()
+double flirImg::calcRAWmin()
 {
   double rawmax, rawvaluerange, rawmin;
   rawmax        = calcRAWmax();
@@ -24,7 +25,7 @@ double calcRAWmin()
   return rawmin;
 }
 
-double calcRAWrefl()
+double flirImg::calcRAWrefl()
 {
   double planckr1, planckr2;
   double planckb, planckf, plancko;
@@ -50,7 +51,7 @@ double calcRAWrefl()
 
 }
 
-double calcRAWmaxobj()
+double flirImg::calcRAWmaxobj()
 {
   double rawmaxobj, rawmax, emis, rawrefl;
   rawmax    = calcRAWmax();
@@ -60,7 +61,7 @@ double calcRAWmaxobj()
   return rawmaxobj;
 }
 
-double calcRAWminobj()
+double flirImg::calcRAWminobj()
 {
   double rawminobj, rawmin, emis, rawrefl;
   rawmin    = calcRAWmin();
@@ -70,7 +71,7 @@ double calcRAWminobj()
   return rawminobj;
 }
 
-double calcTmin()
+double flirImg::calcTmin()
 {
   double planckr1, planckr2;
   double planckb, planckf, plancko;
@@ -97,7 +98,7 @@ double calcTmin()
   return tmin;
 }
 
-double calcTmax()
+double flirImg::calcTmax()
 {
   double planckr1, planckr2;
   double planckb, planckf, plancko;
@@ -125,7 +126,7 @@ double calcTmax()
 }
 
 
-double calcSmax()
+double flirImg::calcSmax()
 {
   double planckr1, planckr2;
   double planckb, planckf, plancko;
@@ -153,7 +154,7 @@ double calcSmax()
   return Smax;
 }
 
-double calcSmin()
+double flirImg::calcSmin()
 {
   double planckr1, planckr2;
   double planckb, planckf, plancko;
@@ -180,7 +181,7 @@ double calcSmin()
   return Smin;
 }
 
-double calcSdelta()
+double flirImg::calcSdelta()
 {
   double Smax, Smin, Sdelta;
   Smax   = calcSmax();
@@ -192,7 +193,7 @@ double calcSdelta()
 
 
 
-double calculateTemperature(double thermalintensityvalue)
+double flirImg::calculateTemperature(double thermalintensityvalue)
 {
   double planckr1, planckr2;
   double planckb, planckf, plancko;

@@ -6,56 +6,56 @@
 #include <string>
 #include <array>
 #include "../inc/getPaths.hpp"
-#include "../inc/suitcase.hpp"
+#include "../inc/flirImg.hpp"
 //#include "../inc/utilfunc.hpp"
 #include "../inc/ExifTool.h"
 
 using namespace std;
 using namespace cv;
 
-std::string convert2GrayscaleCmdString()
+std::string flirImg::convert2GrayscaleCmdString()
 {
   std::string cmdString;
   cmdString = std::string("convert - grayscale:- ");
   return cmdString;
 }
 
-std::string convert2Grayscale16bitCmdString()
+std::string flirImg::convert2Grayscale16bitCmdString()
 {
   std::string cmdString;
   cmdString = std::string("convert - -depth 16 grayscale:- ");
   return cmdString;
 }
 
-std::string convert2GrayscaleMSBCmdString()
+std::string flirImg::convert2GrayscaleMSBCmdString()
 {
   std::string cmdString;
   cmdString = std::string("convert - -endian msb grayscale:- ");
   return cmdString;
 }
 
-std::string convert2GrayscaleAutolevelledCmdString()
+std::string flirImg::convert2GrayscaleAutolevelledCmdString()
 {
   std::string cmdString;
   cmdString = std::string("convert - -auto-level grayscale:- ");
   return cmdString; 
 }
 
-std::string convertThermal2Grayscale16MSBAutolevelCmdString()
+std::string flirImg::convertThermal2Grayscale16MSBAutolevelCmdString()
 {
   std::string cmdString;
-  cmdString = convert2GrayscaleCmdString()
+  cmdString = this->convert2GrayscaleCmdString()
             + std::string(" | ")
-            + convert2Grayscale16bitCmdString()
+            + this->convert2Grayscale16bitCmdString()
             + std::string(" | ")
-            + convert2GrayscaleMSBCmdString()
+            + this->convert2GrayscaleMSBCmdString()
             + std::string(" | ")
-            + convert2GrayscaleAutolevelledCmdString();
+            + this->convert2GrayscaleAutolevelledCmdString();
   return cmdString;
 }
 
 
-std::string extractThermalCmdString()
+std::string flirImg::extractThermalCmdString()
 {
   std::string cmdString;
   cmdString = std::string("exiftool ")
