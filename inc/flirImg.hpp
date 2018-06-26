@@ -54,7 +54,7 @@ public:
 
   
 
-  flirImg readRGBImage();
+  void    readRGBImage();
   void    printImageSummary();
   void    printExifThermalTags();
   void    calcRaws();

@@ -8,11 +8,10 @@ using namespace std;
 #include <opencv2/opencv.hpp>
 using namespace cv;
 
-flirImg flirImg::readRGBImage()
+void flirImg::readRGBImage()
 {
-    imgpath = getRGBimgpath();
     // read image from file 
-    opencvimg = imread(imgpath);
+    opencvimg = imread(getRGBimgpath());
  
     // if fail to read the image
     if ( opencvimg.empty() ) { 
@@ -23,47 +22,47 @@ flirImg flirImg::readRGBImage()
 	   << getRGBimgpath() << endl;
     }
     
-    return opencvimg;
+    //return opencvimg;
 }
 
-void extractRawThermaldata(const char* imgpath, std::string &rawthermdataimagename)
-{
+//void extractRawThermaldata(const char* imgpath, std::string &rawthermdataimagename)
+//{
   //rawthermdataimagename   = imgpath + std::string(".rawthermout.png");
   
   //std::string output;
   //output = exec(rawthermaldatacmdstring);
   //cout << output << endl;
   //rawthermdataimgpath = rawthermdataimagename.c_str();
-}
+//}
 
 
-void extractThermalImage()
-{
-  
-}
+//void extractThermalImage()
+//{
+//  
+//}
 
 
 
-void readImageIntoWindow()
-{
+//void readImageIntoWindow()
+//{
   //namedWindow("AJRthermal", 1);
   //imshow("AJRthermal", readRGBImage());
 
-}
+//}
 
-void readExifTags()
-{
+//void readExifTags()
+//{
   //exifTagdata exifTagValues;
   //readExiftoolMetadata(rgbimgpath, exifTagValues);
 
-}
+//}
 
 
 
-void loadThermalData()
-{
+//void loadThermalData()
+//{
   // read in the extracted thermal image bruh
   //readImage(thermdataimgpath.c_str(),
   //    thermalimg,
   //	    "problem loading thermal image");
-}
+//}
