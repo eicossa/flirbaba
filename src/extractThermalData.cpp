@@ -21,7 +21,7 @@ void flirImg::extractRawThermaldata()
                +
                std::string(" | ")
                +
-               convert2GrayscaleCmdString()
+               convert2Grayscale16bitCmdString()
                +
                getTHERMimgpath();
   cout << fullstring;

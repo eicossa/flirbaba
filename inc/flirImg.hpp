@@ -58,6 +58,8 @@ public:
 
   void    readRGBImage();
   void    readThermalImage();
+
+  Mat     getThermImgMat() {return thermimg;}
   
   void    printImageSummary();
   void    printExifThermalTags();

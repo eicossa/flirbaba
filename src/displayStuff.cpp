@@ -23,8 +23,9 @@ static void displayImageWithCompleteCalcsOnMouseover()
 
 void CallBackFunc(int event, int x, int y, int flags, void* param)
 {
-    // double          calculatedTemp;
-    // double          thermalvalue;
+    double          calculatedTemp;
+    double          thermalvalue;
+    flirImg*        flirImgParam;
 
     // const char*     imgpath;
     // suitcase*       imgnpathdata;
@@ -35,19 +36,22 @@ void CallBackFunc(int event, int x, int y, int flags, void* param)
     
     if  ( event == EVENT_LBUTTONDOWN )
     {
-      cout << "Left button of the mouse is clicked "
-    	   <<"- position "
-    	   <<" ("<< x << ", "
-    	   << y << ")"
-    	   << endl;
-      //imgnpathdata = (suitcase*) param;
+      
+      flirImgParam   = (flirImg*) param;
 
       //rgb          = imgnpathdata->img;
       //thermalgray  = imgnpathdata->thermalimg;
       //tdata        = imgnpathdata->tdata;
       //imgpath      = imgnpathdata->imgpath;
 
-      //thermalvalue = (int)(thermalgray).at<Vec3b>(y, x)[0];
+      Mat thermmat = flirImgParam->getThermImgMat();
+      thermalvalue = (int)(thermmat).at<Vec3b>(y, x)[0];
+
+      cout << setw(5) <<" ("<< x << ", "
+    	   << y << ")  "
+	   << "[ " << thermalvalue << " ]"
+	   << endl;
+
       //calculatedTemp = tdata.calculateTemperature(thermalvalue);
 
       // printf("%d %d: %d, %d, %d : %d %d %d : ( %d degrees)\n", 
@@ -91,7 +95,7 @@ void flirImg::displayTooltippedImage()
   
   
   // set the callback function for any mouse event
-  setMouseCallback("AJRthermal", CallBackFunc, this);
+  setMouseCallback("Thermal", CallBackFunc, this);
  
   // wait until user press some key
   waitKey(0);

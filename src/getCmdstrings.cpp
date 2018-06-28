@@ -23,7 +23,7 @@ std::string flirImg::convert2GrayscaleCmdString()
 std::string flirImg::convert2Grayscale16bitCmdString()
 {
   std::string cmdString;
-  cmdString = std::string("convert - -depth 16 grayscale:- ");
+  cmdString = std::string("convert - -depth 16 grayscale: ");
   return cmdString;
 }
 
