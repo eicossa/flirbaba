@@ -9,7 +9,7 @@ int main()
   img.readRGBImage();
   img.printImageSummary();
   img.extractRawThermaldata();
-  img.displayTooltippedImage();
+  //img.displayTooltippedImage();
     
   return 0;
 }

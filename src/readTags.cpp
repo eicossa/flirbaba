@@ -6,8 +6,8 @@
 #include <string>
 
 #include "../inc/ExifTool.h"
-#include "../inc/getPaths.hpp"
 #include "../inc/utilfunc.hpp"
+#include "../inc/getPaths.hpp"
 #include "../inc/flirImg.hpp"
 
 using namespace std;
