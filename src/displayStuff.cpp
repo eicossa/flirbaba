@@ -87,6 +87,7 @@ void flirImg::displayTooltippedImage()
   namedWindow("Thermal", 1);
 
   imshow("RGB", this->opencvimg);
+  imshow("Thermal", this->thermimg);
   
   
   // set the callback function for any mouse event

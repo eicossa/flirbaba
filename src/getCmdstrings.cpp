@@ -16,7 +16,7 @@ using namespace cv;
 std::string flirImg::convert2GrayscaleCmdString()
 {
   std::string cmdString;
-  cmdString = std::string("convert - grayscale:- ");
+  cmdString = std::string("convert - grayscale: ");
   return cmdString;
 }
 
@@ -60,7 +60,6 @@ std::string flirImg::extractThermalCmdString()
   std::string cmdString;
   cmdString = std::string("exiftool ")
               + getRGBimgpath()
-              + std::string(" -rawthermalimage -b")
-              + getTHERMimgpath();
+              + std::string(" -rawthermalimage -b ");
   return cmdString;
 }
