@@ -13,6 +13,8 @@ class flirImg{
   imgTempData        tdata;
   // imgSData        sdata;
   std::string        imgpath;
+
+  Mat                thermimg;
   Mat                opencvimg;
 
 public: 
@@ -52,9 +54,11 @@ public:
   std::string getThermalimgErrorMsg();
 
 
-  
+  void    extractRawThermaldata();
 
   void    readRGBImage();
+  void    readThermalImage();
+  
   void    printImageSummary();
   void    printExifThermalTags();
   void    calcRaws();

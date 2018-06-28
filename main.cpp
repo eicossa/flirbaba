@@ -8,6 +8,7 @@ int main()
   flirImg img;
   img.readRGBImage();
   img.printImageSummary();
+  img.extractRawThermaldata();
   img.displayTooltippedImage();
     
   return 0;

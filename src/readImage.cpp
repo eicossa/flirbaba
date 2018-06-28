@@ -15,7 +15,7 @@ void flirImg::readRGBImage()
  
     // if fail to read the image
     if ( opencvimg.empty() ) { 
-      cout << getRGBimgErrorMsg() << imgpath << endl;
+      cout << getRGBimgErrorMsg() << getRGBimgpath() << endl;
       exit;
     } else{
       cout << "Successfully read in "
@@ -25,15 +25,24 @@ void flirImg::readRGBImage()
     //return opencvimg;
 }
 
-//void extractRawThermaldata(const char* imgpath, std::string &rawthermdataimagename)
-//{
-  //rawthermdataimagename   = imgpath + std::string(".rawthermout.png");
-  
-  //std::string output;
-  //output = exec(rawthermaldatacmdstring);
-  //cout << output << endl;
-  //rawthermdataimgpath = rawthermdataimagename.c_str();
-//}
+void flirImg::readThermalImage()
+{
+    // read image from file 
+    thermimg = imread(getTHERMimgpath());
+ 
+    // if fail to read the image
+    if ( thermimg.empty() ) { 
+      cout << getThermalimgErrorMsg() << getTHERMimgpath() << endl;
+      exit;
+    } else{
+      cout << "Successfully read in "
+	   << getTHERMimgpath() << endl;
+    }
+    
+    //return thermimg;
+}
+
+
 
 
 //void extractThermalImage()

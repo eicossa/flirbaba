@@ -4,10 +4,12 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+
 #include "../inc/ExifTool.h"
 #include "../inc/getPaths.hpp"
 #include "../inc/utilfunc.hpp"
 #include "../inc/flirImg.hpp"
+
 using namespace std;
 
 double flirImg::getExiftoolTagInfo(std::string tagname)
