@@ -9,21 +9,21 @@ void flirImg::printImageSummary()
 {
   //cout << "\n\n\nExiftags read .... "            << endl;
   cout << " | PlanckR1       : " << setw(10) << getPlanckR1()
-       << " | RAWmax         : " << setw(10) << calcRAWmax()
-       << " | Tmin    : "        << setw(10) << calcTmin()
-       << " | Smax    : "        << setw(10) << calcSmax()   << endl;
+       << " | RAWmax         : " << setw(10) << getRAWmax()
+       << " | Tmin    : "        << setw(10) << getTmin()
+       << " | Smax    : "        << setw(10) << getSmax()   << endl;
   cout << " | PlanckR2       : " << setw(10) << getPlanckR2()
-       << " | RAWmin         : " << setw(10) << calcRAWmin()    
-       << " | Tmax    : "        << setw(10) << calcTmax()
-       << " | Smin    : "        << setw(10) << calcSmin()   << endl;
+       << " | RAWmin         : " << setw(10) << getRAWmin()    
+       << " | Tmax    : "        << setw(10) << getTmax()
+       << " | Smin    : "        << setw(10) << getSmin()   << endl;
   cout << " | PlanckB        : " << setw(10) << getPlanckB()
-       << " | RAWrefl        : " << setw(10) << calcRAWrefl()   
+       << " | RAWrefl        : " << setw(10) << getRAWrefl()   
        << setw(23) << ""
-       << " | Sdelta   : " << setw(10) << calcSdelta() << endl;
+       << " | Sdelta   : " << setw(10) << getSdelta() << endl;
   cout << " | PlanckF        : " << setw(10) << getPlanckF()
-       << " | RAWmaxobj      : " << setw(10) << calcRAWmaxobj() << endl;
+       << " | RAWmaxobj      : " << setw(10) << getRAWmaxobj() << endl;
   cout << " | PlanckO        : " << setw(10) << getPlanckO()
-       << " | RAWminobj      : " << setw(10) << calcRAWminobj() << endl;
+       << " | RAWminobj      : " << setw(10) << getRAWminobj() << endl;
   cout << " | Tref           : " << setw(10) << getTref()           << endl;
   cout << " | Emis           : " << setw(10) << getEmis()           << endl;
   cout << " | RawValueMedian : " << setw(10) << getRAWvaluemedian() << endl;
@@ -48,28 +48,28 @@ void flirImg::printExifThermalTags()
 void flirImg::calcRaws()
 {
   cout << "\n\n\nRaws calculated" << endl;
-  cout << "RAWmax         : "     << calcRAWmax()         << endl;
-  cout << "RAWmin         : "     << calcRAWmin()         << endl;
-  cout << "RAWrefl        : "     << calcRAWrefl()        << endl;
-  cout << "RAWmaxobj      : "     << calcRAWmaxobj()      << endl;
-  cout << "RAWminobj      : "     << calcRAWminobj()      << endl;
+  cout << "RAWmax         : "     << getRAWmax()         << endl;
+  cout << "RAWmin         : "     << getRAWmin()         << endl;
+  cout << "RAWrefl        : "     << getRAWrefl()        << endl;
+  cout << "RAWmaxobj      : "     << getRAWmaxobj()      << endl;
+  cout << "RAWminobj      : "     << getRAWminobj()      << endl;
 }
 
 
 void flirImg::printMaxMinTemps()
 {
   cout << "\n\n Tmin, Tmax ..." << endl;
-  cout << "Tmin    : "             << calcTmin()   << endl;
-  cout << "Tmax    : "             << calcTmax()   << endl;
+  cout << "Tmin    : "          << getTmin()   << endl;
+  cout << "Tmax    : "          << getTmax()   << endl;
 
 }
 
 void flirImg::printSes()
 {
   cout << "\n\n Smax, Smin, Sdelta calculated ..." << endl;
-  cout << "Smax    : "             << calcSmax()   << endl;
-  cout << "Smin    : "             << calcSmin()   << endl;
-  cout << "Sdelta  : "             << calcSdelta() << endl;
+  cout << "Smax    : "          << getSmax()   << endl;
+  cout << "Smin    : "          << getSmin()   << endl;
+  cout << "Sdelta  : "          << getSdelta() << endl;
 }
 
 

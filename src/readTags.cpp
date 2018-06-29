@@ -40,14 +40,26 @@ double flirImg::getExiftoolTagInfo(std::string tagname)
 
 
 
-double flirImg::getPlanckR1() { return getExiftoolTagInfo("PlanckR1"); }
-double flirImg::getPlanckR2() { return getExiftoolTagInfo("PlanckR2"); }
-double flirImg::getPlanckB() { return getExiftoolTagInfo("PlanckB"); }
-double flirImg::getPlanckF() { return getExiftoolTagInfo("PlanckF"); }
-double flirImg::getPlanckO() { return getExiftoolTagInfo("PlanckO"); }
-double flirImg::getTref() { return getExiftoolTagInfo("Tref"); }
-double flirImg::getEmis() { return getExiftoolTagInfo("Emis"); }
-double flirImg::getRAWvaluerange() { return getExiftoolTagInfo("RAWvaluerange"); }
-double flirImg::getRAWvaluemedian() { return getExiftoolTagInfo("RAWvaluemedian"); }
+double flirImg::readPlanckR1() { return getExiftoolTagInfo("PlanckR1"); }
+double flirImg::readPlanckR2() { return getExiftoolTagInfo("PlanckR2"); }
+double flirImg::readPlanckB() { return getExiftoolTagInfo("PlanckB"); }
+double flirImg::readPlanckF() { return getExiftoolTagInfo("PlanckF"); }
+double flirImg::readPlanckO() { return getExiftoolTagInfo("PlanckO"); }
+double flirImg::readTref() { return getExiftoolTagInfo("Tref"); }
+double flirImg::readEmis() { return getExiftoolTagInfo("Emis"); }
+double flirImg::readRAWvaluerange() { return getExiftoolTagInfo("RAWvaluerange"); }
+double flirImg::readRAWvaluemedian() { return getExiftoolTagInfo("RAWvaluemedian"); }
 
 
+void flirImg::readMetadata()
+{
+  readPlanckR1();
+  readPlanckR2();
+  readPlanckB();
+  readPlanckF();
+  readPlanckO();
+  readTref();
+  readEmis();
+  readRAWvaluerange();
+  readRAWvaluemedian();
+}

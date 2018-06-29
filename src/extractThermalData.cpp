@@ -16,6 +16,8 @@ void flirImg::extractRawThermaldata()
   //rawthermdataimagename   = imgpath + std::string(".rawthermout.png");
   std::string output;
   std::string fullstring;
+
+  cout << "extracting raw thermal data";
   
   fullstring = extractThermalCmdString()
                +

@@ -7,10 +7,12 @@ int main()
 {
   flirImg img;
   img.readRGBImage();
-  img.printImageSummary();
-  img.extractRawThermaldata();
-  img.readThermalImage();
-  img.displayTooltippedImage();
+  img.readMetadata();
+  //img.calcEverything();
+  //img.printImageSummary();
+  //img.extractRawThermaldata();
+  //img.readThermalImage();
+  //img.displayTooltippedImage();
     
   return 0;
 }

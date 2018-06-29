@@ -23,9 +23,9 @@ static void displayImageWithCompleteCalcsOnMouseover()
 
 void CallBackFunc(int event, int x, int y, int flags, void* param)
 {
-    double          calculatedTemp;
-    double          thermalvalue;
-    flirImg*        flirImgParam;
+  double          calculatedTemp1, calculatedTemp2;
+  double          thermalvalue;
+  flirImg*        flirImgParam;
 
     // const char*     imgpath;
     // suitcase*       imgnpathdata;
@@ -46,10 +46,15 @@ void CallBackFunc(int event, int x, int y, int flags, void* param)
 
       Mat thermmat = flirImgParam->getThermImgMat();
       thermalvalue = (int)(thermmat).at<Vec3b>(y, x)[0];
-
+      calculatedTemp1 = flirImgParam->calcTemp(thermalvalue);
+      calculatedTemp2 = flirImgParam->calcTemp((thermalvalue*255));
+	
       cout << setw(5) <<" ("<< x << ", "
     	   << y << ")  "
 	   << "[ " << thermalvalue << " ]"
+	   << "[ " << thermalvalue*255 << " ]"
+	   << "[ " << calculatedTemp1 << " ]"
+	   << "[ " << calculatedTemp2 << " ]"
 	   << endl;
 
       //calculatedTemp = tdata.calculateTemperature(thermalvalue);
@@ -89,6 +94,7 @@ void flirImg::displayTooltippedImage()
 
   namedWindow("RGB",     1);
   namedWindow("Thermal", 1);
+  namedWindow("PHPwaala", 1);
 
   imshow("RGB", this->opencvimg);
   imshow("Thermal", this->thermimg);
