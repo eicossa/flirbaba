@@ -7,9 +7,6 @@ using namespace std;
 
 void flirImg::calcRAWmax()
 {
-  //double rawvaluemedian, rawvaluerange, rawmax;
-  //rawvaluemedian = getRAWvaluemedian();
-  //rawvaluerange  = getRAWvaluerange();
   checkRAWvaluemedian();
   checkRAWvaluerange();
 
@@ -18,14 +15,10 @@ void flirImg::calcRAWmax()
 
 void flirImg::calcRAWmin()
 {
-  //double rawmax, rawvaluerange, rawmin;
-  //rawmax        = calcRAWmax();
-  //rawvaluerange = getRAWvaluerange();
   checkRAWvaluerange();
   checkRAWmax();
 
   rawmin = rawmax - rawvaluerange;
-  //return rawmin;
 }
 
 
@@ -33,124 +26,70 @@ void flirImg::calcRAWmin()
 // in the metadata
 void flirImg::calcRAWrefl()
 {
-  //double planckr1, planckr2;
-  //double planckb, planckf, plancko;
-  //double tref;
-  //double rawrefl;
-
   checkPlancks();
   checkTref();
   checkRAWrefl();
 
-  double t11, t12, t13, t14;
+  double t11, t12, t13, t14, t15;
 
-  //planckr1 = getPlanckR1();
-  //planckr2 = getPlanckR2();
-  //planckb  = getPlanckB();
-  //planckf  = getPlanckF();
-  //plancko  = getPlanckO();
-  //tref     = getTref();
+  tref = 25;
+  t11 = tref + 273.15;
+  cout << "\n t11 " << t11;
+  t12 = planckb / t11;
+  cout << "\n t12 " << t12;
+  t13 = exp(t12) - planckf;
+  cout << "\n t13 " << t13;
+  t14 = planckr2 * t13;
+  cout << "\n t14 " << t14;
+  t15 = planckr1 / t14;
+  cout << "\n t15 " << t15;
   
-  t11 = ((planckb) / (tref + 273.15));
-  t12 = t11 - planckf;
-  t13 = planckr2 * exp(t11);
-  t14 = planckr1/t12;
-  
-  rawrefl = t13 - plancko;
-  //return rawrefl;
-
+  rawrefl = t15 - plancko;
+  cout << "\n t16 " << rawrefl << endl;
 }
 
 void flirImg::calcRAWmaxobj()
 {
-  //double rawmaxobj, rawmax, emis, rawrefl;
-  //rawmax    = calcRAWmax();
-  //emis      = getEmis();
-  //rawrefl   = calcRAWrefl();
-
   checkRAWmax();
   checkEmis();
   checkRAWrefl();
   
   rawmaxobj = (rawmax - (1-emis)*rawrefl)/emis;
-  //return rawmaxobj;
 }
 
 void flirImg::calcRAWminobj()
 {
-  //double rawminobj, rawmin, emis, rawrefl;
-  //rawmin    = calcRAWmin();
-  //emis      = getEmis();
-  //rawrefl   = calcRAWrefl();
-  
   checkRAWmin();
   checkEmis();
   checkRAWrefl();
   
   rawminobj = (rawmin - (1-emis)*rawrefl)/emis;
-  //return rawminobj;
 }
 
 void flirImg::calcTmin()
 {
-  // double planckr1, planckr2;
-  // double planckb, planckf, plancko;
-  // double rawminobj;
-  // double tmin;
   checkPlancks();
   checkRAWminobj();
+  double t21, t22, t23, t24;
   
-  
-  double t21, t22, t23;
-  
-  
-
-  // planckr1  = getPlanckR1();
-  // planckr2  = getPlanckR2();
-  // planckb   = getPlanckB();
-  // planckf   = getPlanckF();
-  // plancko   = getPlanckO();
-  // rawminobj = calcRAWminobj();
-  
-  t21 = (planckr2 * (rawminobj + plancko) + planckf);
-  //cout << " Tmin t21 : " << t21 << endl;
-  t22 = (planckr1/t21) - 273.15;
-  //cout << " Tmin t22 : " << t22 << endl;
-  t23 = log(-t22);
-  //cout << " Tmin t23 : " << t23 << endl;
-  
-  tmin = planckb / t23;
-  //cout << " Tmin     : " << tmin << endl;
-  //return tmin;
+  t21 = (rawminobj + plancko);
+  t22 = planckr2 * t21;
+  t23 = (planckr1/t22) + planckf;
+  t24 = planckb / log(t23);
+  tmin = t24 - 273.15;
 }
 
 void flirImg::calcTmax()
 {
-  // double planckr1, planckr2;
-  // double planckb, planckf, plancko;
-  // double rawmaxobj;
-  // double tmax;
   checkPlancks();
   checkRAWmaxobj();
-  double t31, t32, t33;
+  double t31, t32, t33, t34;
 
-  // planckr1  = getPlanckR1();
-  // planckr2  = getPlanckR2();
-  // planckb   = getPlanckB();
-  // planckf   = getPlanckF();
-  // plancko   = getPlanckO();
-  // rawmaxobj = calcRAWmaxobj();
-
-  t31 = (planckr2 * (rawmaxobj + plancko) + planckf);
-  //cout << " Tmax t31 : " << t31 << endl;
-  t32 = (planckr1/t31) - 273.15;
-  //cout << " Tmax t32 : " << t32 << endl;
-  t33 = log(-t32);
-  //cout << " Tmax t33 : " << t33 << endl;
-
-  tmax = planckb / t33;
-  //cout << " Tmax     : " << tmax << endl;
-  //return tmax;
+  t31 = (rawmaxobj + plancko);
+  t32 = planckr2 * t31;
+  t33 = (planckr1/t32) + planckf;
+  t34 = planckb / log(t33);
+  tmax = t34 - 273.15;
 }
 
 
@@ -158,19 +97,7 @@ void flirImg::calcSmax()
 {
   checkPlancks();
   checkRAWmax();
-  //double planckr1, planckr2;
-  //double planckb, planckf, plancko;
-  //double rawmax;
-  //double Smax;
   double t41, t42, t43;
-
-  //planckr1  = getPlanckR1();
-  //planckr2  = getPlanckR2();
-  //planckb   = getPlanckB();
-  //planckf   = getPlanckF();
-  //plancko   = getPlanckO();
-  //rawmax    = calcRAWmax();
-
   
   t41 = planckr2 * (rawmax + plancko);
   //cout << " Smax t41 : " << t41 << endl;
@@ -180,8 +107,6 @@ void flirImg::calcSmax()
   //cout << " Smax t43 : " << t43 << endl;
   
   smax = planckb / t43;
-  //cout << " Smax    : " << Smax << endl;
-  //return Smax;
 }
 
 void flirImg::calcSmin()
@@ -194,13 +119,6 @@ void flirImg::calcSmin()
   //double Smin;
   double t51, t52, t53;
 
-  //planckr1  = getPlanckR1();
-  //planckr2  = getPlanckR2();
-  //planckb   = getPlanckB();
-  //planckf   = getPlanckF();
-  //plancko   = getPlanckO();
-  //rawmin    = calcRAWmin();
-
   t51 = planckr2 * (rawmin + plancko);
   //cout << " Smin t51 : " << t51 << endl;
   t52 = ((planckr1/t51) + planckf);
@@ -210,30 +128,25 @@ void flirImg::calcSmin()
   
   smin = planckb / t53;
   //cout << " Smin    : " << Smin << endl;
-  //return Smin;
 }
 
 void flirImg::calcSdelta()
 {
-  //double Smax, Smin, Sdelta;
-  //Smax   = calcSmax();
-  //Smin   = calcSmin();
   checkSmax();
   checkSmin();
   
   sdelta = smax - smin;
-  //cout << " Sdelta  : " << Sdelta << endl;
-  //return Sdelta;
 }
 
 
 void flirImg::calcEverything()
 {
-  calcRAWmin();
   calcRAWmax();
+  calcRAWmin();
   calcRAWrefl();
-  calcRAWminobj();
   calcRAWmaxobj();
+  calcRAWminobj();
+  
   calcTmin();
   calcTmax();
   calcSmin();
@@ -246,30 +159,17 @@ void flirImg::calcEverything()
 
 double flirImg::calcTemp(double thermalintensityvalue)
 {
-  //double planckr1, planckr2;
-  //double planckb, planckf, plancko;
-  //double Smin, Sdelta;
   checkPlancks();
   checkSmin();
   checkSdelta();
 
   double t61, t62, t63, t64, t65, t66, t67;
-
-  //planckr1  = getPlanckR1();
-  //planckr2  = getPlanckR2();
-  //planckb   = getPlanckB();
-  //planckf   = getPlanckF();
-  //plancko   = getPlanckO();
-  //Smin      = calcSmin();
-  //Sdelta    = calcSdelta();
   
   t61 = (65535 * thermalintensityvalue) + (plancko);
   t62 = planckr2 * t61;
-  t63 = planckr1/(t62 + planckf);
-  t64 = log(t63);
-  t65 = t64 - smin;
-  t66 = planckb/t65;
-  t67 = t66/sdelta;
+  t63 = (planckr1/t62) + planckf;
+  t64 = (planckb/log(t63)) - smin;
+  t65 = t64/sdelta;
 
-  return t67;
+  return t65;
 }

@@ -31,7 +31,7 @@ void flirImg::printImageSummary()
 }
 
 
-void flirImg::printExifThermalTags()
+void flirImg::printMetadata()
 {
   cout << "\n\n\nExiftags read .... "                << endl;
   cout << "PlanckR1       : " << getPlanckR1()       << endl;

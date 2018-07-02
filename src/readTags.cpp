@@ -53,13 +53,13 @@ double flirImg::readRAWvaluemedian() { return getExiftoolTagInfo("RAWvaluemedian
 
 void flirImg::readMetadata()
 {
-  readPlanckR1();
-  readPlanckR2();
-  readPlanckB();
-  readPlanckF();
-  readPlanckO();
-  readTref();
-  readEmis();
-  readRAWvaluerange();
-  readRAWvaluemedian();
+  planckr1 = readPlanckR1();
+  planckr2 = readPlanckR2();
+  planckb  = readPlanckB();
+  planckf  = readPlanckF();
+  plancko  = readPlanckO();
+  tref     = readTref();
+  emis     = readEmis();
+  rawvaluerange = readRAWvaluerange();
+  rawvaluemedian = readRAWvaluemedian();
 }

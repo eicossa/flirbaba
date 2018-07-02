@@ -2,23 +2,13 @@
 <?php
 //------------- set necessary paramters -------------------------------------
 
-if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-    //WINDOWS user: set path to tools
-    $convert='"C:\util\ImageMagick\convert.exe"';
-    $exiftool='"C:\util\exiftool\exiftool.exe"';
-    //set font variable as needed (Mac/Win) for color scale
-    $font='-font c:\windows\Fonts\arialbd.ttf';
-    $escape='';
-
-} else {
-    //Unix/Mac: set path to tools here 
-    $convert='/usr/bin/convert';
-    //$convert='/opt/ImageMagick/bin/convert';
-    $exiftool='/usr/bin/exiftool';
-    //set font variable as needed (Mac/Win) for color scale
-    $font='-font /Library/Fonts/Arial\ Bold.ttf';
-    $escape='\\';
-}
+//Unix/Mac: set path to tools here 
+$convert='/usr/bin/convert';
+//$convert='/opt/ImageMagick/bin/convert';
+$exiftool='/usr/bin/exiftool';
+//set font variable as needed (Mac/Win) for color scale
+$font='-font /Library/Fonts/Arial\ Bold.ttf';
+$escape='\\';
 
 //color scale
 $font_color='white';
@@ -161,12 +151,37 @@ if (isset($options['rmax'])) $RAWmax=$options['rmax'];
 printf("RAW Temp Range select      : %d %d\n",$RAWmin,$RAWmax);
 
 // calc amount of radiance of reflected objects ( Emissivity < 1 )
+$t11 = $Temp_ref + 273.15;
+printf("t11 %.1f \n",$t11);
+$t12 = $B/$t11;
+printf("t12 %.1f \n",$t12);
+$t13 = exp($t12) - $F;
+printf("t13 %.1f \n",$t13);
+$t14 = ($R2 * $t13);
+printf("t14 %.1f \n", $t14);
+$t15 = $R1 / $t14;
+printf("t15 %.1f \n", $t15);
+$t16 = $t15 - $O;
+printf("t16 %.1f \n", $t16);
 $RAWrefl=$R1/($R2*(exp($B/($Temp_ref+273.15))-$F))-$O;
 printf("RAW reflected: %d\n",$RAWrefl); 
 
 // get displayed object temp max/min and convert to "%.1f" for printing
 $RAWmaxobj=($RAWmax-(1-$Emissivity)*$RAWrefl)/$Emissivity;
+printf("RAW maxobj : %.1f\n", $RAWmaxobj);
 $RAWminobj=($RAWmin-(1-$Emissivity)*$RAWrefl)/$Emissivity;
+printf("RAW minobj : %.1f\n", $RAWminobj);
+
+//$t21 = ($RAWminobj + $O);
+//printf("t21 %.1f \n", $t21);
+//$t22 = $R2 * $t21;
+//printf("t22 %.1f \n", $t22);
+//$t23 = $R1/($t22) + $F;
+//printf("t23 %.1f \n", $t23);
+//$t24 = $B/log($t23);
+//printf("t24 %.1f \n", $t24);
+//$t25 = $t24 - 273.15;
+//printf("t25 %.1f \n", $t25);
 $Temp_min=sprintf("%.1f", $B/log($R1/($R2*($RAWminobj+$O))+$F)-273.15);
 $Temp_max=sprintf("%.1f", $B/log($R1/($R2*($RAWmaxobj+$O))+$F)-273.15);
 printf("Temp min: %.1f\n",$Temp_min);
@@ -194,10 +209,13 @@ if ($exif[0]['RawThermalImageType'] != "TIFF")
 // print('RAW Temp Range from sensor : '.exec($convert.' raw.png -format "%[min] %[max]" info:')."\n");
 
 // convert every RAW-16-Bit Pixel with Planck's Law to a Temperature Grayscale value and append temp scale
-// $Smax=$B/log($R1/($R2*($RAWmax+$O))+$F);
-// $Smin=$B/log($R1/($R2*($RAWmin+$O))+$F);
-// $Sdelta=$Smax-$Smin;
-// exec($convert." raw.png -fx \"($B/ln($R1/($R2*(65535*u+$O))+$F)-$Smin)/$Sdelta\" ir.png");
+$Smax=$B/log($R1/($R2*($RAWmax+$O))+$F);
+printf("\nSmax %.1f", $Smax);
+$Smin=$B/log($R1/($R2*($RAWmin+$O))+$F);
+printf("\nSmin %.1f", $Smin);
+$Sdelta=$Smax-$Smin;
+printf("\nSdelta %.1f", $Sdelta);
+exec($convert." raw.png -fx \"($B/ln($R1/($R2*(65535*u+$O))+$F)-$Smin)/$Sdelta\" ir.png");
 
 if ( !isset($options['pip']) )
 {    

@@ -8,11 +8,16 @@ int main()
   flirImg img;
   img.readRGBImage();
   img.readMetadata();
-  //img.calcEverything();
-  //img.printImageSummary();
-  //img.extractRawThermaldata();
-  //img.readThermalImage();
-  //img.displayTooltippedImage();
+  img.printMetadata();
+  img.calcEverything();
+
+  img.printImageSummary();
+
+  
+  img.extractRawThermaldata();
+  img.readThermalImage();
+
+  img.displayTooltippedImage();
     
   return 0;
 }

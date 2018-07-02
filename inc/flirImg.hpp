@@ -137,7 +137,8 @@ public:
   void    readThermalImage();
 
   Mat     getThermImgMat() {return thermimg;}
-  
+
+  void    printMetadata();
   void    printImageSummary();
   void    printExifThermalTags();
   void    calcRaws();

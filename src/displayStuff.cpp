@@ -53,8 +53,8 @@ void CallBackFunc(int event, int x, int y, int flags, void* param)
     	   << y << ")  "
 	   << "[ " << thermalvalue << " ]"
 	   << "[ " << thermalvalue*255 << " ]"
-	   << "[ " << calculatedTemp1 << " ]"
-	   << "[ " << calculatedTemp2 << " ]"
+	   << "[ Temp1 : " << calculatedTemp1 << " ]"
+	   << "[ Temp2 : " << calculatedTemp2 << " ]"
 	   << endl;
 
       //calculatedTemp = tdata.calculateTemperature(thermalvalue);
