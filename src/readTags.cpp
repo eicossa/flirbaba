@@ -42,24 +42,37 @@ double flirImg::getExiftoolTagInfo(std::string tagname)
 
 double flirImg::readPlanckR1() { return getExiftoolTagInfo("PlanckR1"); }
 double flirImg::readPlanckR2() { return getExiftoolTagInfo("PlanckR2"); }
-double flirImg::readPlanckB() { return getExiftoolTagInfo("PlanckB"); }
-double flirImg::readPlanckF() { return getExiftoolTagInfo("PlanckF"); }
-double flirImg::readPlanckO() { return getExiftoolTagInfo("PlanckO"); }
-double flirImg::readTref() { return getExiftoolTagInfo("Tref"); }
-double flirImg::readEmis() { return getExiftoolTagInfo("Emis"); }
+double flirImg::readPlanckB()  { return getExiftoolTagInfo("PlanckB"); }
+double flirImg::readPlanckF()  { return getExiftoolTagInfo("PlanckF"); }
+double flirImg::readPlanckO()  { return getExiftoolTagInfo("PlanckO"); }
+double flirImg::readTref()     { return getExiftoolTagInfo("Tref"); }
+double flirImg::readEmis()     { return getExiftoolTagInfo("Emis"); }
 double flirImg::readRAWvaluerange() { return getExiftoolTagInfo("RAWvaluerange"); }
 double flirImg::readRAWvaluemedian() { return getExiftoolTagInfo("RAWvaluemedian"); }
 
 
+int flirImg::readImageWidth()      { return getExiftoolTagInfo("ImageWidth");}
+int flirImg::readImageHeight()     { return getExiftoolTagInfo("ImageHeight");}
+int flirImg::readRAWThermalImageWidth()  { return getExiftoolTagInfo("RawThermalImageWidth");}
+int flirImg::readRAWThermalImageHeight() { return getExiftoolTagInfo("RawThermalImageHeight");}
+
 void flirImg::readMetadata()
 {
+  // plancks
   planckr1 = readPlanckR1();
   planckr2 = readPlanckR2();
   planckb  = readPlanckB();
   planckf  = readPlanckF();
   plancko  = readPlanckO();
+  // tref & emis
   tref     = readTref();
   emis     = readEmis();
-  rawvaluerange = readRAWvaluerange();
+  // raw value  
+  rawvaluerange  = readRAWvaluerange();
   rawvaluemedian = readRAWvaluemedian();
+  // image size
+  imagewidth     = readImageWidth();
+  imageheight    = readImageHeight();
+  rawthermalimagewidth = readRAWThermalImageWidth();
+  rawthermalimageheight = readRAWThermalImageHeight();
 }

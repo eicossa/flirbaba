@@ -17,6 +17,7 @@ int main()
   img.extractRawThermaldata();
   img.readThermalImage();
 
+  //img.readPHPImage();
   img.displayTooltippedImage();
     
   return 0;

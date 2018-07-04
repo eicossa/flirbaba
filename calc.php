@@ -151,26 +151,26 @@ if (isset($options['rmax'])) $RAWmax=$options['rmax'];
 printf("RAW Temp Range select      : %d %d\n",$RAWmin,$RAWmax);
 
 // calc amount of radiance of reflected objects ( Emissivity < 1 )
-$t11 = $Temp_ref + 273.15;
-printf("t11 %.1f \n",$t11);
-$t12 = $B/$t11;
-printf("t12 %.1f \n",$t12);
-$t13 = exp($t12) - $F;
-printf("t13 %.1f \n",$t13);
-$t14 = ($R2 * $t13);
-printf("t14 %.1f \n", $t14);
-$t15 = $R1 / $t14;
-printf("t15 %.1f \n", $t15);
-$t16 = $t15 - $O;
-printf("t16 %.1f \n", $t16);
+//$t11 = $Temp_ref + 273.15;
+//printf("t11 %.1f \n",$t11);
+//$t12 = $B/$t11;
+//printf("t12 %.1f \n",$t12);
+//$t13 = exp($t12) - $F;
+//printf("t13 %.1f \n",$t13);
+//$t14 = ($R2 * $t13);
+//printf("t14 %.1f \n", $t14);
+//$t15 = $R1 / $t14;
+//printf("t15 %.1f \n", $t15);
+//$t16 = $t15 - $O;
+//printf("t16 %.1f \n", $t16);
 $RAWrefl=$R1/($R2*(exp($B/($Temp_ref+273.15))-$F))-$O;
-printf("RAW reflected: %d\n",$RAWrefl); 
+//printf("RAW reflected: %d\n",$RAWrefl); 
 
 // get displayed object temp max/min and convert to "%.1f" for printing
 $RAWmaxobj=($RAWmax-(1-$Emissivity)*$RAWrefl)/$Emissivity;
-printf("RAW maxobj : %.1f\n", $RAWmaxobj);
+//printf("RAW maxobj : %.1f\n", $RAWmaxobj);
 $RAWminobj=($RAWmin-(1-$Emissivity)*$RAWrefl)/$Emissivity;
-printf("RAW minobj : %.1f\n", $RAWminobj);
+//printf("RAW minobj : %.1f\n", $RAWminobj);
 
 //$t21 = ($RAWminobj + $O);
 //printf("t21 %.1f \n", $t21);
@@ -198,23 +198,23 @@ printf("Temp max: %.1f\n",$Temp_max);
 // if your imagemagick have no freetype library remove the next line
 // exec($convert." gradient.png -background ".$frame_color." ".$font." -fill ".$font_color." -pointsize 15 label:\"$Temp_max C\" +swap -gravity Center -append  label:\"$Temp_min\" -append gradient.png");
 
-if ($exif[0]['RawThermalImageType'] != "TIFF")
-{
+//if ($exif[0]['RawThermalImageType'] != "TIFF")
+//{
   //16 bit PNG: change byte order
     // $size=$exif[0]['RawThermalImageWidth']."x".$exif[0]['RawThermalImageHeight'];
     // exec($exiftool." -b -RawThermalImage $flirimg | ".$convert." - gray:- | ".$convert." -depth 16 -endian msb -size ".$size." gray:- raw.png");   
-}else{
-    // exec($exiftool." -b -RawThermalImage $flirimg | ".$convert." - raw.png");      
-}
+//}else{
+//     exec($exiftool." -b -RawThermalImage $flirimg | ".$convert." - raw.png");      
+//}
 // print('RAW Temp Range from sensor : '.exec($convert.' raw.png -format "%[min] %[max]" info:')."\n");
 
 // convert every RAW-16-Bit Pixel with Planck's Law to a Temperature Grayscale value and append temp scale
 $Smax=$B/log($R1/($R2*($RAWmax+$O))+$F);
-printf("\nSmax %.1f", $Smax);
+//printf("\nSmax %.1f", $Smax);
 $Smin=$B/log($R1/($R2*($RAWmin+$O))+$F);
-printf("\nSmin %.1f", $Smin);
+//printf("\nSmin %.1f", $Smin);
 $Sdelta=$Smax-$Smin;
-printf("\nSdelta %.1f", $Sdelta);
+//printf("\nSdelta %.1f", $Sdelta);
 exec($convert." raw.png -fx \"($B/ln($R1/($R2*(65535*u+$O))+$F)-$Smin)/$Sdelta\" ir.png");
 
 if ( !isset($options['pip']) )

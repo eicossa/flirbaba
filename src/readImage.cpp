@@ -42,6 +42,23 @@ void flirImg::readThermalImage()
     //return thermimg;
 }
 
+void flirImg::readPHPImage()
+{
+    // read image from file 
+    phpimg = imread(getPHPimgpath());
+ 
+    // if fail to read the image
+    if ( phpimg.empty() ) { 
+      cout << getPHPimgErrorMsg() << getPHPimgpath() << endl;
+      exit;
+    } else{
+      cout << "Successfully read in "
+	   << getPHPimgpath() << endl;
+    }
+    
+    //return thermimg;
+}
+
 
 
 

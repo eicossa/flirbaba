@@ -13,3 +13,9 @@ std::string flirImg::getThermalimgErrorMsg()
   std::string errmsg = "problem loading thermal data from img";
   return errmsg;
 }
+
+std::string flirImg::getPHPimgErrorMsg()
+{
+  std::string errmsg = "problem loading data from PHP img";
+  return errmsg;
+}

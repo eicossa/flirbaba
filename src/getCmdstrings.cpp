@@ -23,36 +23,48 @@ std::string flirImg::convert2GrayscaleCmdString()
 std::string flirImg::convert2Grayscale16bitCmdString()
 {
   std::string cmdString;
-  cmdString = std::string("convert - -depth 16 -endian msb -auto-level -colorspace gray ");
+  cmdString = std::string("convert - -depth 16 -endian msb -auto-level -colorspace gray ")
+              + std::string(" -size ")
+              + std::to_string(getRAWThermalImageWidth())
+              + std::string("x")
+              + std::to_string(getRAWThermalImageHeight())
+              + std::string(" ");
   return cmdString;
 }
 
-std::string flirImg::convert2GrayscaleMSBCmdString()
+std::string flirImg::resizeImageCmdString()
 {
   std::string cmdString;
-  cmdString = std::string("convert - -endian msb grayscale:- ");
   return cmdString;
+
 }
 
-std::string flirImg::convert2GrayscaleAutolevelledCmdString()
-{
-  std::string cmdString;
-  cmdString = std::string("convert - -auto-level grayscale:- ");
-  return cmdString; 
-}
+// std::string flirImg::convert2GrayscaleMSBCmdString()
+// {
+//   std::string cmdString;
+//   cmdString = std::string("convert - -endian msb grayscale:- ");
+//   return cmdString;
+// }
 
-std::string flirImg::convertThermal2Grayscale16MSBAutolevelCmdString()
-{
-  std::string cmdString;
-  cmdString = this->convert2GrayscaleCmdString()
-            + std::string(" | ")
-            + this->convert2Grayscale16bitCmdString()
-            + std::string(" | ")
-            + this->convert2GrayscaleMSBCmdString()
-            + std::string(" | ")
-            + this->convert2GrayscaleAutolevelledCmdString();
-  return cmdString;
-}
+// std::string flirImg::convert2GrayscaleAutolevelledCmdString()
+// {
+//   std::string cmdString;
+//   cmdString = std::string("convert - -auto-level grayscale:- ");
+//   return cmdString; 
+// }
+
+// std::string flirImg::convertThermal2Grayscale16MSBAutolevelCmdString()
+// {
+//   std::string cmdString;
+//   cmdString = this->convert2GrayscaleCmdString()
+//             + std::string(" | ")
+//             + this->convert2Grayscale16bitCmdString()
+//             + std::string(" | ")
+//             + this->convert2GrayscaleMSBCmdString()
+//             + std::string(" | ")
+//             + this->convert2GrayscaleAutolevelledCmdString();
+//   return cmdString;
+// }
 
 
 std::string flirImg::extractThermalCmdString()

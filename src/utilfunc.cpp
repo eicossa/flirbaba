@@ -13,5 +13,3 @@
 //     if ( it != str1.end() ) return it - str1.begin();
 //     else return -1; // not found
 // }
-
-

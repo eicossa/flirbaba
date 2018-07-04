@@ -16,6 +16,7 @@ class flirImg{
 
   Mat                thermimg;
   Mat                opencvimg;
+  Mat                phpimg;
 
   // metadata values
   double             planckr1;
@@ -46,6 +47,11 @@ class flirImg{
   void               checkRAWvaluerange();
   void               checkRAWvaluemedian();
 
+  int                readImageWidth();
+  int                readImageHeight();
+  int                readRAWThermalImageWidth();
+  int                readRAWThermalImageHeight();
+
   // calculated values
   double             rawmin;
   double             rawmax;
@@ -57,10 +63,15 @@ class flirImg{
   double             smin;
   double             smax;
   double             sdelta;
+
+  int                imagewidth;
+  int                imageheight;
+  int                rawthermalimagewidth;
+  int                rawthermalimageheight;
   
   // calculation functions
-  void               calcRAWmin();
   void               calcRAWmax();
+  void               calcRAWmin();
   void               calcRAWrefl();
   void               calcRAWminobj();
   void               calcRAWmaxobj();
@@ -98,6 +109,11 @@ public:
   double getRAWvaluerange()   {checkRAWvaluerange();   return rawvaluerange;}
   double getRAWvaluemedian()  {checkRAWvaluemedian(); return rawvaluemedian;}
 
+  int    getImageWidth()      {return imagewidth;}
+  int    getImageHeight()     {return imageheight;}
+  int    getRAWThermalImageWidth()  { return rawthermalimagewidth;}
+  int    getRAWThermalImageHeight() { return rawthermalimageheight;}
+
   void               calcEverything();
 
   double getRAWmax()          {checkRAWmax();                 return rawmax;}
@@ -122,19 +138,24 @@ public:
   std::string convert2GrayscaleMSBCmdString();
   std::string convert2GrayscaleAutolevelledCmdString();
   std::string convertThermal2Grayscale16MSBAutolevelCmdString();
+  std::string resizeImageCmdString();
   
   std::string extractThermalCmdString();
   
   std::string getRGBimgpath();
   std::string getTHERMimgpath();
+  std::string getPHPimgpath();
+  
   std::string getRGBimgErrorMsg();
   std::string getThermalimgErrorMsg();
+  std::string getPHPimgErrorMsg();
 
 
   void    extractRawThermaldata();
 
   void    readRGBImage();
   void    readThermalImage();
+  void    readPHPImage();
 
   Mat     getThermImgMat() {return thermimg;}
 

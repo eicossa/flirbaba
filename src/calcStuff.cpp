@@ -33,19 +33,19 @@ void flirImg::calcRAWrefl()
   double t11, t12, t13, t14, t15;
 
   tref = 25;
-  t11 = tref + 273.15;
-  cout << "\n t11 " << t11;
+  t11 = tref + 273.15; 
+ //cout << "\n t11 " << t11;
   t12 = planckb / t11;
-  cout << "\n t12 " << t12;
+  //cout << "\n t12 " << t12;
   t13 = exp(t12) - planckf;
-  cout << "\n t13 " << t13;
+  //cout << "\n t13 " << t13;
   t14 = planckr2 * t13;
-  cout << "\n t14 " << t14;
+  //cout << "\n t14 " << t14;
   t15 = planckr1 / t14;
-  cout << "\n t15 " << t15;
+  //cout << "\n t15 " << t15;
   
   rawrefl = t15 - plancko;
-  cout << "\n t16 " << rawrefl << endl;
+  //cout << "\n t16 " << rawrefl << endl;
 }
 
 void flirImg::calcRAWmaxobj()
@@ -164,12 +164,22 @@ double flirImg::calcTemp(double thermalintensityvalue)
   checkSdelta();
 
   double t61, t62, t63, t64, t65, t66, t67;
-  
-  t61 = (65535 * thermalintensityvalue) + (plancko);
-  t62 = planckr2 * t61;
-  t63 = (planckr1/t62) + planckf;
-  t64 = (planckb/log(t63)) - smin;
-  t65 = t64/sdelta;
 
-  return t65;
+  //t61 = ((65535 * thermalintensityvalue) - rawminobj)/(rawmaxobj-rawminobj);
+  // just linearly mapped the thermal intensity values to a value between
+  // rawminobj and rawmaxobj using
+  // https://stackoverflow.com/questions/5731863/mapping-a-numeric-range-onto-another
+  
+  t61 = rawminobj + ((rawmaxobj-rawminobj)/(255))*(thermalintensityvalue);
+  cout << "t61 : " << t61 << endl;
+  //t61 = 13900;
+  t62 = t61 + plancko;
+  t63 = planckr2 * t62;
+  t64 = (planckr1/t63) + planckf;
+  //t65 = planckb/log(t64) - smin;
+  t65 = planckb/log(t64);
+  //t66 = t65/sdelta;
+  t66 = t65 - 273.15;
+
+  return t66;
 }

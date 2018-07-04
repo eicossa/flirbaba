@@ -4,8 +4,9 @@ EXIFFLAGS = -c
 INC       = -I inc/
 OPENCVLIB = `pkg-config opencv --cflags --libs`
 
-all        : flirbaba exif
-exif      :  ExifTool.o ExifToolPipe.o TagInfo.o
+all       : flirbaba exif
+exif      : ExifTool.o ExifToolPipe.o TagInfo.o
+clean     : cleanup
 
 ALLSRCS   = ${MAINSRCS} ${OTHRSRCS}
 MAINSRCS  = main.cpp
@@ -22,3 +23,5 @@ TagInfo.o : src/exiftool/TagInfo.cpp
 	$(CC) $(EXIFFLAGS) -o obj/TagInfo.o ${INC} src/exiftool/TagInfo.cpp
 flirbaba   : ${ALLSRCS} ${EXIFOBJS}
 	$(CC) ${INC} -o flirbaba ${EXIFOBJS} ${ALLSRCS} ${OPENCVLIB}
+cleanup    : ${ALLSRCS}
+	rm -f ~/Dropbox/nabtd-images/FLIR1097/FLIR1097.jpg.thermout.png

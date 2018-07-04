@@ -28,12 +28,12 @@ void flirImg::printImageSummary()
   cout << " | Emis           : " << setw(10) << getEmis()           << endl;
   cout << " | RawValueMedian : " << setw(10) << getRAWvaluemedian() << endl;
   cout << " | RawValueRange  : " << setw(10) << getRAWvaluerange()  << endl;
+
 }
 
 
 void flirImg::printMetadata()
 {
-  cout << "\n\n\nExiftags read .... "                << endl;
   cout << "PlanckR1       : " << getPlanckR1()       << endl;
   cout << "PlanckR2       : " << getPlanckR2()       << endl;
   cout << "PlanckB        : " << getPlanckB()        << endl;
@@ -43,6 +43,11 @@ void flirImg::printMetadata()
   cout << "Emis           : " << getEmis()           << endl;
   cout << "RawValueMedian : " << getRAWvaluemedian() << endl;
   cout << "RawValueRange  : " << getRAWvaluerange()  << endl;
+
+  cout << "ImageWidth  : " << imagewidth << endl;
+  cout << "ImageHeight : " << imageheight << endl;
+
+  cout << "--------------------------------" << endl;
 }
 
 void flirImg::calcRaws()
