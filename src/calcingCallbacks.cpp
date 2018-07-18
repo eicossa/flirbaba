@@ -18,9 +18,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* param)
 
     
   if  ( event == EVENT_LBUTTONDOWN ){
-      
     flirImgParam   = (flirImg*) param;
-
     Mat thermmat = flirImgParam->getThermImgMat();
     thermalvalue = (int)(thermmat).at<Vec3b>(y, x)[0];
     calculatedTemp1 = flirImgParam->calcTemp(thermalvalue);
