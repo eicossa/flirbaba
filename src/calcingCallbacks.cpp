@@ -17,13 +17,15 @@ void CallBackFunc(int event, int x, int y, int flags, void* param)
   // Mat             rgb, thermalgray;
 
     
-  if  ( event == EVENT_LBUTTONDOWN ){
+  if( event == EVENT_LBUTTONDOWN ){
     flirImgParam   = (flirImg*) param;
     Mat thermmat = flirImgParam->getThermImgMat();
     thermalvalue = (int)(thermmat).at<Vec3b>(y, x)[0];
     calculatedTemp1 = flirImgParam->calcTemp(thermalvalue);
 	
-    cout << setw(5) <<" ("<< x << ", "
+    cout << setw(5)
+	 <<" ("
+	 << x << ", "
 	 << y << ")  "
 	 << "[ "        << thermalvalue    << " ]"
 	 << "[ Temp : " << calculatedTemp1 << " ]"
