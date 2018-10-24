@@ -88,3 +88,10 @@ void flirImg::checkSdelta()
 {
   assert(sdelta != 0);
 }
+
+
+// check everythin
+void flirImg::checkEverything()
+{
+
+}

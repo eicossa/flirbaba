@@ -185,3 +185,12 @@ double flirImg::calcTemp(double thermalintensityvalue)
 
   return t66;
 }
+
+
+void flirImg::calcTempEveryPixel()
+{
+
+
+
+
+}

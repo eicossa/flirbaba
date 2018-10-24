@@ -92,6 +92,7 @@ class flirImg{
   void               checkSmin();
   void               checkSmax();
   void               checkSdelta();
+  void               checkEverything();
   
 public:
   flirImg();
@@ -128,6 +129,7 @@ public:
   double getSdelta()          {checkSdelta();                 return sdelta;}
   
   double             calcTemp(double);
+  void               calcTempEveryPixel();
   
   std::string convert2GrayscaleCmdString();
   std::string convert2Grayscale16bitCmdString();

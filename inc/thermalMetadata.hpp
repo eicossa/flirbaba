@@ -1,5 +1,7 @@
 
+class imgExifNormalTags{
 
+};
 
 class imgExifThermalTags{
   double planckr1;
@@ -23,21 +25,28 @@ class imgRawData{
   double rawminobj;
 };
 
-
-class imgTempData{
-  double tmax;
-  double tmin;
-};
-
-
 class imgSdata{
   double Smax;
   double Smin;
   double Sdelta;
 };
 
+
+
+
+
 class imgPixel{
   double thermalIntensityValue;
   double calcTemp;
 };
+
+
+class imgTempData{
+  double tmax;
+  double tmin;
+
+};
+
+
+
   
