@@ -28,7 +28,7 @@ void flirImg::readRGBImage()
 void flirImg::readThermalImage()
 {
     // read image from file 
-    thermimg = imread(getTHERMimgpath());
+    thermimg = imread(getTHERMimgpath(), IMREAD_ANYDEPTH);
  
     // if fail to read the image
     if ( thermimg.empty() ) { 
@@ -40,6 +40,24 @@ void flirImg::readThermalImage()
     }
     
     //return thermimg;
+}
+
+// this is a diagnostic thang
+void flirImg::writeThermalImageAsDiagnostic()
+{
+    // read image from file 
+    // thermimg = imread(getTHERMimgpath(), IMREAD_ANYDEPTH);
+
+  try{
+    imwrite(getTHERMimgDiagnosticpath(), thermimg);
+  }
+  catch(runtime_error& ex){
+    cout << ex.what() << endl;
+  }
+  cout << "Successfully wrote out diagnostic thermal image "
+       << getTHERMimgDiagnosticpath() << endl;
+
+
 }
 
 void flirImg::readPHPImage()

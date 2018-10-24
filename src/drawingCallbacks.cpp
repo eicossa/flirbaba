@@ -9,12 +9,6 @@
 using namespace std;
 using namespace cv;
 
-void drawRectangle(int event, int x, int y, int flags, void* param)
-{
-  // Point ul,br;
-
-}
-
 /*************************************************************************
  *
  *
@@ -141,14 +135,13 @@ void drawSelectionBezierCurve(int event, int x, int y, int flags, void* param)
         bezier_thermimage_copy = thermimage.clone();
 	Mat all_ps(beziercurve_pts);
 	// check if atleasts points available
-	//cv::polylines(bezier_thermimage_copy, all_ps, false, (0,255,0), 1);
-	cv::drawContours();
+	// cv::drawContours();
 	imshow("ThermalBezierCurve", bezier_thermimage_copy);
 	bezier_thermimage_copy.release();
       }
     }
     else{
-      polyline_drawing  = true;
+      polyline_drawing           = true;
       polyline_start_p.x         = x;
       polyline_start_p.y         = y;
     }

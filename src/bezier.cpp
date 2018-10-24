@@ -46,8 +46,8 @@ Point Bezier::getControlPoint(int p)
   Point output; 
   Mat* spline = this->controlPoints; 	
 
-  output.x = *((float*) CV_MAT_ELEM_PTR(*spline, 1, p));
-  output.y = *((float*) CV_MAT_ELEM_PTR(*spline, 1, p) + spline->step);
+  output.x = *((float*) (*spline, 1, p));
+  output.y = *((float*) (*spline, 1, p) + spline->step);
   
   return output;		
 }
@@ -61,8 +61,8 @@ void Bezier::dumpPoints()
   Mat* spline = this->controlPoints; 	
   
   for (int i = 1; i < this->length; i++){
-    cout << "X(" << i << "): " << *((float*) CV_MAT_ELEM_PTR(*spline, 1, i));
-    cout << "\tY: " << *((float*) CV_MAT_ELEM_PTR(*spline, 1, i) + spline->step) << "\n";
+    cout << "X(" << i << "): " << *((float*) (*spline, 1, i));
+    cout << "\tY: " << *((float*) (*spline, 1, i) + spline->step) << "\n";
   }
 }
 
@@ -91,15 +91,16 @@ void Bezier::loadFile(char* filename[])
   this->length = lines;
 	
   // create CvMat object
-  CvMat* input = cvCreateMat(lines, lines, CV_32FC2);
+  Mat input = Mat(lines, lines, CV_32FC2);
 	
   // load CvMat with coordinates
+  // this was originall *((float*) (*input, 1, i)+input->step) = points[1][i;]
   for(int i = 0; i < lines; i++){
-    *((float*) CV_MAT_ELEM_PTR(*input, 1, i)) = points[0][i];
-    *((float*) CV_MAT_ELEM_PTR(*input, 1, i)+input->step) = points[1][i];
+    *((float*) (input, 1, i)) = points[0][i];
+    //*((float*) (*input, 1, i)+input->step) = points[1][i];
   }
 	
-  this->controlPoints = input;	
+  this->controlPoints = &input;	
 }
 
 /* 	getPoint() 
@@ -109,7 +110,7 @@ void Bezier::loadFile(char* filename[])
 Point Bezier::getPoint(int t)
 {
   Point output;
-  CvMat* spline = this->controlPoints; 	
+  Mat* spline = this->controlPoints; 	
   
   int splineCount = this->length/4;
   int currSpline  = (int) ((t/1000.0f) * (float) splineCount);
@@ -118,8 +119,8 @@ Point Bezier::getPoint(int t)
   int CP[2][4];
   
   for (int i = currSpline*4; i < (currSpline+1)*4; i++){
-    CP[0][i] = (int) *((float*) CV_MAT_ELEM_PTR(*spline, 1, i));
-    CP[1][i] = (int) *((float*) CV_MAT_ELEM_PTR(*spline, 1, i) + spline->step);
+    CP[0][i] = (int) *((float*) (*spline, 1, i));
+    CP[1][i] = (int) *((float*) (*spline, 1, i) + spline->step);
   }
 	
   int cx = 3 * (CP[0][1] - CP[0][0]);

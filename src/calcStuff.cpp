@@ -159,19 +159,21 @@ void flirImg::calcEverything()
 
 double flirImg::calcTemp(double thermalintensityvalue)
 {
+  //calcEverything();
   checkPlancks();
   checkSmin();
   checkSdelta();
 
   double t61, t62, t63, t64, t65, t66, t67;
 
-  //t61 = ((65535 * thermalintensityvalue) - rawminobj)/(rawmaxobj-rawminobj);
+  // t61 = ((65535 * thermalintensityvalue) - rawminobj)/(rawmaxobj-rawminobj);
   // just linearly mapped the thermal intensity values to a value between
   // rawminobj and rawmaxobj using
   // https://stackoverflow.com/questions/5731863/mapping-a-numeric-range-onto-another
-  
-  t61 = rawminobj + ((rawmaxobj-rawminobj)/(255))*(thermalintensityvalue);
-  cout << "t61 : " << t61 << endl;
+
+  //cout << "ThermalIntensityValue " << thermalintensityvalue;
+  t61 = rawminobj + ((rawmaxobj-rawminobj)/(65535))*(thermalintensityvalue);
+  // cout << "t61 : " << t61 << endl;
   //t61 = 13900;
   t62 = t61 + plancko;
   t63 = planckr2 * t62;

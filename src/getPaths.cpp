@@ -4,13 +4,19 @@ using namespace std;
 
 std::string flirImg::getRGBimgpath()
 {
-  std::string path = "/home/eicossa/Dropbox/nabtd-images/FLIR1097/FLIR1097.jpg";
+  std::string path = "/home/eicossa/Dropbox/dset/nabtd-images/FLIR1097/FLIR1097.jpg";
   return path;
 }
 
 std::string flirImg::getTHERMimgpath()
 {
   std::string path = getRGBimgpath() + ".thermout.png";
+  return path;
+}
+
+std::string flirImg::getTHERMimgDiagnosticpath()
+{
+  std::string path = getRGBimgpath() + ".thermout.diagnostic.png";
   return path;
 }
 

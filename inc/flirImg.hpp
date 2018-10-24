@@ -140,6 +140,7 @@ public:
   
   std::string getRGBimgpath();
   std::string getTHERMimgpath();
+  std::string getTHERMimgDiagnosticpath();
   std::string getPHPimgpath();
   
   std::string getRGBimgErrorMsg();
@@ -151,6 +152,7 @@ public:
 
   void    readRGBImage();
   void    readThermalImage();
+  void    writeThermalImageAsDiagnostic();
   void    readPHPImage();
 
   Mat     getThermImgMat() {return thermimg;}

@@ -32,6 +32,10 @@ std::string flirImg::convert2Grayscale16bitCmdString()
   return cmdString;
 }
 
+
+
+
+
 std::string flirImg::resizeImageCmdString()
 {
   std::string cmdString;
