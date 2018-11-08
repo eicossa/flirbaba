@@ -1,5 +1,9 @@
 #+STARTUP: indent align hidestars inlineimages
 
+* threads important to the project
+- http://answers.opencv.org/question/191675/loading-raw-array-of-16-bit-integers-as-grayscale-image/
+- https://stackoverflow.com/questions/2763006/make-the-current-git-branch-a-master-branch
+- https://imagemagick.org/script/identify.php
 * calc.php
 #+begin_src php
 #!/usr/bin/php

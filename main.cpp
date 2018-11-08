@@ -6,20 +6,17 @@
 int main()
 {
   flirImg img;
+  // read original image into memory
   img.readRGBImage();
-  img.readMetadata();
-  img.printMetadata();
-  img.calcEverything();
-
+  // read and calculate metadata params
+  img.readAndCalculateMetadata();
+  // print all metadata
+  img.printAllMetadata();
   img.printImageSummary();
 
-  
-  img.extractRawThermaldata();
-  img.readThermalImage();
-  img.writeThermalImageAsDiagnostic();
-
-  //img.readPHPImage();
+  img.calcTempForEveryPixel();
   img.displayTooltippedImage();
     
   return 0;
 }
+

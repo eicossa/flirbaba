@@ -62,51 +62,17 @@ void flirImg::writeThermalImageAsDiagnostic()
 
 void flirImg::readPHPImage()
 {
-    // read image from file 
-    phpimg = imread(getPHPimgpath());
+    // // read image from file 
+    // phpimg = imread(getPHPimgpath());
  
-    // if fail to read the image
-    if ( phpimg.empty() ) { 
-      cout << getPHPimgErrorMsg() << getPHPimgpath() << endl;
-      exit;
-    } else{
-      cout << "Successfully read in "
-	   << getPHPimgpath() << endl;
-    }
+    // // if fail to read the image
+    // if ( phpimg.empty() ) { 
+    //   cout << getPHPimgErrorMsg() << getPHPimgpath() << endl;
+    //   exit;
+    // } else{
+    //   cout << "Successfully read in "
+    // 	   << getPHPimgpath() << endl;
+    // }
     
-    //return thermimg;
+    // //return thermimg;
 }
-
-
-
-
-//void extractThermalImage()
-//{
-//  
-//}
-
-
-
-//void readImageIntoWindow()
-//{
-  //namedWindow("AJRthermal", 1);
-  //imshow("AJRthermal", readRGBImage());
-
-//}
-
-//void readExifTags()
-//{
-  //exifTagdata exifTagValues;
-  //readExiftoolMetadata(rgbimgpath, exifTagValues);
-
-//}
-
-
-
-//void loadThermalData()
-//{
-  // read in the extracted thermal image bruh
-  //readImage(thermdataimgpath.c_str(),
-  //    thermalimg,
-  //	    "problem loading thermal image");
-//}

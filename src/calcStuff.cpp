@@ -1,11 +1,11 @@
 #include <iostream>
 #include <cmath>
 #include "../inc/readTags.hpp"
-#include "../inc/flirImg.hpp"
+#include "../inc/flirImgMetadata.hpp"
 
 using namespace std;
 
-void flirImg::calcRAWmax()
+void flirImgMetadata::calcRAWmax()
 {
   checkRAWvaluemedian();
   checkRAWvaluerange();
@@ -13,7 +13,7 @@ void flirImg::calcRAWmax()
   rawmax = rawvaluemedian + (rawvaluerange/2);
 }
 
-void flirImg::calcRAWmin()
+void flirImgMetadata::calcRAWmin()
 {
   checkRAWvaluerange();
   checkRAWmax();
@@ -24,7 +24,7 @@ void flirImg::calcRAWmin()
 
 // an optional thaaang if tref & RAWrefl are defined
 // in the metadata
-void flirImg::calcRAWrefl()
+void flirImgMetadata::calcRAWrefl()
 {
   checkPlancks();
   checkTref();
@@ -48,7 +48,7 @@ void flirImg::calcRAWrefl()
   //cout << "\n t16 " << rawrefl << endl;
 }
 
-void flirImg::calcRAWmaxobj()
+void flirImgMetadata::calcRAWmaxobj()
 {
   checkRAWmax();
   checkEmis();
@@ -57,7 +57,7 @@ void flirImg::calcRAWmaxobj()
   rawmaxobj = (rawmax - (1-emis)*rawrefl)/emis;
 }
 
-void flirImg::calcRAWminobj()
+void flirImgMetadata::calcRAWminobj()
 {
   checkRAWmin();
   checkEmis();
@@ -66,7 +66,7 @@ void flirImg::calcRAWminobj()
   rawminobj = (rawmin - (1-emis)*rawrefl)/emis;
 }
 
-void flirImg::calcTmin()
+void flirImgMetadata::calcTmin()
 {
   checkPlancks();
   checkRAWminobj();
@@ -79,7 +79,7 @@ void flirImg::calcTmin()
   tmin = t24 - 273.15;
 }
 
-void flirImg::calcTmax()
+void flirImgMetadata::calcTmax()
 {
   checkPlancks();
   checkRAWmaxobj();
@@ -93,7 +93,7 @@ void flirImg::calcTmax()
 }
 
 
-void flirImg::calcSmax()
+void flirImgMetadata::calcSmax()
 {
   checkPlancks();
   checkRAWmax();
@@ -109,7 +109,7 @@ void flirImg::calcSmax()
   smax = planckb / t43;
 }
 
-void flirImg::calcSmin()
+void flirImgMetadata::calcSmin()
 {
   checkPlancks();
   checkRAWmin();
@@ -130,7 +130,7 @@ void flirImg::calcSmin()
   //cout << " Smin    : " << Smin << endl;
 }
 
-void flirImg::calcSdelta()
+void flirImgMetadata::calcSdelta()
 {
   checkSmax();
   checkSmin();
@@ -139,7 +139,7 @@ void flirImg::calcSdelta()
 }
 
 
-void flirImg::calcEverything()
+void flirImgMetadata::calcEverything()
 {
   calcRAWmax();
   calcRAWmin();
@@ -157,31 +157,3 @@ void flirImg::calcEverything()
 }
 
 
-double flirImg::calcTemp(double thermalintensityvalue)
-{
-  //calcEverything();
-  checkPlancks();
-  checkSmin();
-  checkSdelta();
-
-  double t61, t62, t63, t64, t65, t66, t67;
-
-  // t61 = ((65535 * thermalintensityvalue) - rawminobj)/(rawmaxobj-rawminobj);
-  // just linearly mapped the thermal intensity values to a value between
-  // rawminobj and rawmaxobj using
-  // https://stackoverflow.com/questions/5731863/mapping-a-numeric-range-onto-another
-
-  //cout << "ThermalIntensityValue " << thermalintensityvalue;
-  t61 = rawminobj + ((rawmaxobj-rawminobj)/(65535))*(thermalintensityvalue);
-  // cout << "t61 : " << t61 << endl;
-  //t61 = 13900;
-  t62 = t61 + plancko;
-  t63 = planckr2 * t62;
-  t64 = (planckr1/t63) + planckf;
-  //t65 = planckb/log(t64) - smin;
-  t65 = planckb/log(t64);
-  //t66 = t65/sdelta;
-  t66 = t65 - 273.15;
-
-  return t66;
-}

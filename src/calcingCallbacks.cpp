@@ -32,26 +32,6 @@ void print50PixelsDiagnostics(flirImg* flirImgParam)
 
 }
 
-
-// void printDiagnostics(int x, int y, Mat thermimg, flirImg &flirImgParam)
-// {
-//   int thermalvalue;
-//   thermalvalue = (int)(thermimg).at<Vec3b>(y, x)[0];
-//   cout << thermalvalue << endl;
-
-
-//   cout << setw(5)
-//        <<" ("
-//        << x << ", "
-//        << y << ")  "
-//        << "[ "        << thermalvalue    << " ]"
-//        << "[ Temp : " << calculatedTemp2 << " ]"
-//        << endl;
-
-
-
-// }
-
 void temperatureCallBackFunc(int event, int x, int y, int flags, void* param)
 {
   double          calculatedTemp, calculatedTemp1, calculatedTemp2;
@@ -72,44 +52,18 @@ void temperatureCallBackFunc(int event, int x, int y, int flags, void* param)
     thermalvalue1 = (int)((thermmat).at<unsigned short>(y, x));
     calculatedTemp1 = flirImgParam->calcTemp(thermalvalue1);
     printPixelDiagnostics(x, y, thermalvalue1, calculatedTemp1);
-
-    //cin >> thermalvalue2;
-    
-    //calculatedTemp2 = flirImgParam->calcTemp(thermalvalue2);
-    //cout << setw(5)
-    //	 <<" ("
-    //	 << x << ", "
-    //	 << y << ")  "
-    //	 << "[ "        << thermalvalue2    << " ]"
-    //	 << "[ Temp : " << calculatedTemp2 << " ]"
-    //	 << endl;
-
-
-    //calculatedTemp = tdata.calculateTemperature(thermalvalue);
-
-    // printf("%d %d: %d, %d, %d : %d %d %d : ( %d degrees)\n", 
-    //           x, y, 
-    //           (int)(rgb).at<Vec3b>(y, x)[0], 
-    //           (int)(rgb).at<Vec3b>(y, x)[1], 
-    //    	(int)(rgb).at<Vec3b>(y, x)[2],
-    //   	(int)(thermalgray).at<Vec3b>(y, x)[0], 
-    //           (int)(thermalgray).at<Vec3b>(y, x)[1], 
-    //   	(int)(thermalgray).at<Vec3b>(y, x)[2],
-    //   	(int)(calculatedTemp));
-
-	
   }
   else if  ( event == EVENT_RBUTTONDOWN )
   {
     //cout << "Right button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
     print50PixelsDiagnostics(flirImgParam);
   }
-  // else if  ( event == EVENT_MBUTTONDOWN )
-  // {
-  //   //cout << "Middle button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
-  // }
-  // else if ( event == EVENT_MOUSEMOVE )
-  // {
-  //   //cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
-  // }    
+  else if  ( event == EVENT_MBUTTONDOWN )
+  {
+    //cout << "Middle button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+  }
+  else if ( event == EVENT_MOUSEMOVE )
+  {
+    //cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
+  }    
 }
