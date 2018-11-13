@@ -1,9 +1,0 @@
-//double getPlanckR1();
-//double getPlanckR2();
-//double getPlanckB();
-//double getPlanckF();
-//double getPlanckO();
-//double getTref();
-//double getEmis();
-//double getRAWvaluerange();
-//double getRAWvaluemedian();
