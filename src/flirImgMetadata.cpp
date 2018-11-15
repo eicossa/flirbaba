@@ -1,21 +1,65 @@
 #include "../inc/flirImgMetadata.hpp"
 
-flirImgMetadata::flirImgMetadata(std::string imgpath)
+flirImgMetadata::flirImgMetadata()
 {
-  readAllMetadata();
-  calcAllMetadata();
+  imgpath = "";
+  planckr1 = 0.0;
+  planckr2 = 0.0;
+  planckb = 0.0;
+  planckf = 0.0;
+  plancko = 0.0;
+  
+  tref = 0.0;
+  emis = 0.0;
+  
+  rawvaluerange = 0.0;
+  rawvaluemedian = 0.0;
+  
+  // read basic metadata
+  imagewidth = -1;
+  imageheight = -1;
+  rawthermalimagewidth = -1;
+  rawthermalimageheight = -1;
+  // calculated values
+  rawmin = 0.0;
+  rawmax = 0.0;
+  rawrefl = 0.0;
+  rawminobj = 0.0;
+  rawmaxobj = 0.0;
+  
+  tmin = 0.0;
+  tmax = 0.0;
+  
+  smin = 0.0;
+  smax = 0.0;
+  sdelta = 0.0;
 
-  checkReadMetadata();
-  checkCalcedMetadata();
 }
 
-void readAllMetadata()
+flirImgMetadata::flirImgMetadata(std::string imgpath)
+{
+    this->imgpath = imgpath;
+    cout << "Inside constructor : " << imgpath <<endl;
+    
+    readAllMetadata();
+    calcAllMetadata();
+
+    checkReadMetadata();
+    checkCalcedMetadata();
+ 
+}
+
+
+
+
+void flirImgMetadata::readAllMetadata()
 {
   readThermalMetadata();
   readBasicMetadata();
 }
 
-void calcAllMetadata()
+
+void flirImgMetadata::calcAllMetadata()
 {
   calcRaws();
   calcTs();
@@ -24,7 +68,7 @@ void calcAllMetadata()
 
 
 
-void calcRaws()
+void flirImgMetadata::calcRaws()
 {
   calcRAWmax();
   calcRAWmin();
@@ -33,76 +77,59 @@ void calcRaws()
   calcRAWminobj();
 }
 
-void calcTs()
+void flirImgMetadata::calcTs()
 {
   calcTmin();
   calcTmax();
 }
 
-void calcSes()
+void flirImgMetadata::calcSes()
 {
   calcSmin();
   calcSmax();
   calcSdelta();
 }
 
+void flirImgMetadata::readBasicMetadata()
+{
+  imagewidth  = readExiftoolTagInfo("ImageWidth");
+  imageheight = readExiftoolTagInfo("ImageHeight");
+  rawthermalimagewidth=readExiftoolTagInfo("RawThermalImageWidth");
+  rawthermalimageheight=readExiftoolTagInfo("RawThermalImageHeight");
+}
 
-
-void readThermalMetadata()
+void flirImgMetadata::readThermalMetadata()
 {
   // plancks
-  planckr1 = readPlanckR1();
-  planckr2 = readPlanckR2();
-  planckb  = readPlanckB();
-  planckf  = readPlanckF();
-  plancko  = readPlanckO();
-  
-  // tref & emis
-  tref     = readTref();
-  emis     = readEmis();
-  
-  // raw value  
-  rawvaluerange  = readRAWvaluerange();
-  rawvaluemedian = readRAWvaluemedian();
-}
+  planckr1 = readExiftoolTagInfo("PlanckR1");
+  planckr2 = readExiftoolTagInfo("PlanckR2");
+  planckb  = readExiftoolTagInfo("PlanckB");
+  planckf  = readExiftoolTagInfo("PlanckF");
+  plancko  = readExiftoolTagInfo("PlanckO");
 
+  // tref and emis
+  tref     = readExiftoolTagInfo("Tref");
+  emis     = readExiftoolTagInfo("Emis");
 
-
-void readBasicMetadata()
-{
-  imagewidth  = getExiftoolTagInfo("ImageWidth");
-  imageheight = getExiftoolTagInfo("ImageHeight");
-  rawthermalimagewidth=getExiftoolTagInfo("RawThermalImageWidth");
-  rawthermalimageheight=getExiftoolTagInfo("RawThermalImageHeight");
-}
-
-void readThermalMetadata()
-{
-  planckr1 = getExiftoolTagInfo("PlanckR1");
-  planckr2 = getExiftoolTagInfo("PlanckR2");
-  planckb  = getExiftoolTagInfo("PlanckB");
-  planckf  = getExiftoolTagInfo("PlanckF");
-  plancko  = getExiftoolTagInfo("PlanckO");
-  tref     = getExiftoolTagInfo("Tref");
-  emis     = getExiftoolTagInfo("Emis");
-  rawvaluerange =  getExiftoolTagInfo("RAWvaluerange");
-  rawvaluemedian = getExiftoolTagInfo("RAWvaluemedian");
+  // raw values
+  rawvaluerange =  readExiftoolTagInfo("RAWvaluerange");
+  rawvaluemedian = readExiftoolTagInfo("RAWvaluemedian");
 
 }
 
 
 void flirImgMetadata::checkReadMetadata()
 {
-    assert(planckr1 != 0);
-    assert(planckr2 != 0);
-    assert(planckb  != 0);
-    assert(planckf  != 0);
-    assert(plancko  != 0);
-    assert(rawvaluemedian != 0);
-    assert(rawvaluerange  != 0);
-    assert(tref           != 0);
-    assert(emis           != 0);
-    assert(rawrefl        != 0);
+  assert(planckr1 != 0);
+  assert(planckr2 != 0);
+  assert(planckb  != 0);
+  assert(planckf  != 0);
+  assert(plancko  != 0);
+  assert(rawvaluemedian != 0);
+  assert(rawvaluerange  != 0);
+  assert(tref           != 0);
+  assert(emis           != 0);
+  assert(rawrefl        != 0);
 }
 
 void flirImgMetadata::checkCalcedMetadata()
@@ -121,16 +148,16 @@ void flirImgMetadata::checkCalcedMetadata()
 
 void flirImgMetadata::calcRAWmax()
 {
-  checkRAWvaluemedian();
-  checkRAWvaluerange();
+  //checkRAWvaluemedian();
+  //checkRAWvaluerange();
 
   rawmax = rawvaluemedian + (rawvaluerange/2);
 }
 
 void flirImgMetadata::calcRAWmin()
 {
-  checkRAWvaluerange();
-  checkRAWmax();
+  //checkRAWvaluerange();
+  //checkRAWmax();
 
   rawmin = rawmax - rawvaluerange;
 }
@@ -140,9 +167,9 @@ void flirImgMetadata::calcRAWmin()
 // in the metadata
 void flirImgMetadata::calcRAWrefl()
 {
-  checkPlancks();
-  checkTref();
-  checkRAWrefl();
+  //checkPlancks();
+  //checkTref();
+  //checkRAWrefl();
 
   double t11, t12, t13, t14, t15;
 
@@ -164,26 +191,26 @@ void flirImgMetadata::calcRAWrefl()
 
 void flirImgMetadata::calcRAWmaxobj()
 {
-  checkRAWmax();
-  checkEmis();
-  checkRAWrefl();
+  //checkRAWmax();
+  //checkEmis();
+  //checkRAWrefl();
   
   rawmaxobj = (rawmax - (1-emis)*rawrefl)/emis;
 }
 
 void flirImgMetadata::calcRAWminobj()
 {
-  checkRAWmin();
-  checkEmis();
-  checkRAWrefl();
+  //checkRAWmin();
+  //checkEmis();
+  //checkRAWrefl();
   
   rawminobj = (rawmin - (1-emis)*rawrefl)/emis;
 }
 
 void flirImgMetadata::calcTmin()
 {
-  checkPlancks();
-  checkRAWminobj();
+  //checkPlancks();
+  //checkRAWminobj();
   double t21, t22, t23, t24;
   
   t21 = (rawminobj + plancko);
@@ -195,8 +222,8 @@ void flirImgMetadata::calcTmin()
 
 void flirImgMetadata::calcTmax()
 {
-  checkPlancks();
-  checkRAWmaxobj();
+  //checkPlancks();
+  //checkRAWmaxobj();
   double t31, t32, t33, t34;
 
   t31 = (rawmaxobj + plancko);
@@ -209,8 +236,8 @@ void flirImgMetadata::calcTmax()
 
 void flirImgMetadata::calcSmax()
 {
-  checkPlancks();
-  checkRAWmax();
+  //checkPlancks();
+  //checkRAWmax();
   double t41, t42, t43;
   
   t41 = planckr2 * (rawmax + plancko);
@@ -225,8 +252,8 @@ void flirImgMetadata::calcSmax()
 
 void flirImgMetadata::calcSmin()
 {
-  checkPlancks();
-  checkRAWmin();
+  //checkPlancks();
+  //checkRAWmin();
   //double planckr1, planckr2;
   //double planckb, planckf, plancko;
   //double rawmin;
@@ -246,29 +273,37 @@ void flirImgMetadata::calcSmin()
 
 void flirImgMetadata::calcSdelta()
 {
-  checkSmax();
-  checkSmin();
+  //checkSmax();
+  //checkSmin();
   
   sdelta = smax - smin;
 }
 
+double flirImgMetadata::calcTempForOnePixel(double thermalintensityvalue)
+{
+  double t61, t62, t63, t64, t65, t66, t67;
+  // just linearly mapped the thermal intensity values to a value between
+  // rawminobj and rawmaxobj using
+  // https://stackoverflow.com/questions/5731863/mapping-a-numeric-range-onto-another
 
+  //cout << "ThermalIntensityValue " << thermalintensityvalue;
+  t61 = rawminobj + ((rawmaxobj-rawminobj)/(65535))*(thermalintensityvalue);
+  // cout << "t61 : " << t61 << endl;
+  //t61 = 13900;
+  t62 = t61 + plancko;
+  t63 = planckr2 * t62;
+  t64 = (planckr1/t63) + planckf;
+  //t65 = planckb/log(t64) - smin;
+  t65 = planckb/log(t64);
+  //t66 = t65/sdelta;
+  t66 = t65 - 273.15;
 
-
-
-
-
-
-
-
-
-
-
+  return t66;
+}
 
 
 double flirImgMetadata::readExiftoolTagInfo(std::string tagname)
 {
-  std::string imgpath;
   std::string readtaglist;
 
   // create our ExifTool objetc
@@ -292,47 +327,37 @@ double flirImgMetadata::readExiftoolTagInfo(std::string tagname)
   return 1.0f;
 }
 
-
-
-
-
-
-
-
-
-
-
 void flirImgMetadata::printCalcedMetadata()
 {
   cout << "\n\n\nRaws calculated" << endl;
-  cout << "RAWmax         : "     << getRAWmax()         << endl;
-  cout << "RAWmin         : "     << getRAWmin()         << endl;
-  cout << "RAWrefl        : "     << getRAWrefl()        << endl;
-  cout << "RAWmaxobj      : "     << getRAWmaxobj()      << endl;
-  cout << "RAWminobj      : "     << getRAWminobj()      << endl;
+  cout << "RAWmax         : "     << rawmax         << endl;
+  cout << "RAWmin         : "     << rawmin         << endl;
+  cout << "RAWrefl        : "     << rawrefl        << endl;
+  cout << "RAWmaxobj      : "     << rawmaxobj      << endl;
+  cout << "RAWminobj      : "     << rawminobj      << endl;
 
   cout << "\n\n Tmin, Tmax ..." << endl;
-  cout << "Tmin    : "          << getTmin()   << endl;
-  cout << "Tmax    : "          << getTmax()   << endl;
+  cout << "Tmin    : "          << tmin   << endl;
+  cout << "Tmax    : "          << tmax   << endl;
 
   cout << "\n\n Smax, Smin, Sdelta calculated ..." << endl;
-  cout << "Smax    : "          << getSmax()   << endl;
-  cout << "Smin    : "          << getSmin()   << endl;
-  cout << "Sdelta  : "          << getSdelta() << endl;
+  cout << "Smax    : "          << smax   << endl;
+  cout << "Smin    : "          << smin   << endl;
+  cout << "Sdelta  : "          << sdelta << endl;
 
 }
 
 void flirImgMetadata::printReadMetadata()
 {
-  cout << "PlanckR1       : " << getPlanckR1()       << endl;
-  cout << "PlanckR2       : " << getPlanckR2()       << endl;
-  cout << "PlanckB        : " << getPlanckB()        << endl;
-  cout << "PlanckF        : " << getPlanckF()        << endl;
-  cout << "PlanckO        : " << getPlanckO()        << endl;
-  cout << "Tref           : " << getTref()           << endl;
-  cout << "Emis           : " << getEmis()           << endl;
-  cout << "RawValueMedian : " << getRAWvaluemedian() << endl;
-  cout << "RawValueRange  : " << getRAWvaluerange()  << endl;
+  cout << "PlanckR1       : " << planckr1       << endl;
+  cout << "PlanckR2       : " << planckr2       << endl;
+  cout << "PlanckB        : " << planckb        << endl;
+  cout << "PlanckF        : " << planckf        << endl;
+  cout << "PlanckO        : " << plancko        << endl;
+  cout << "Tref           : " << tref           << endl;
+  cout << "Emis           : " << emis           << endl;
+  cout << "RawValueMedian : " << rawvaluemedian << endl;
+  cout << "RawValueRange  : " << rawvaluerange  << endl;
 
   cout << "--------------------------------" << endl;
   
@@ -350,25 +375,25 @@ void flirImgMetadata::printReadMetadata()
 void flirImgMetadata::printImageSummary()
 {
   //cout << "\n\n\nExiftags read .... "            << endl;
-  cout << " | PlanckR1       : " << setw(10) << getPlanckR1()
-       << " | RAWmax         : " << setw(10) << getRAWmax()
-       << " | Tmin    : "        << setw(10) << getTmin()
-       << " | Smax    : "        << setw(10) << getSmax()   << endl;
-  cout << " | PlanckR2       : " << setw(10) << getPlanckR2()
-       << " | RAWmin         : " << setw(10) << getRAWmin()    
-       << " | Tmax    : "        << setw(10) << getTmax()
-       << " | Smin    : "        << setw(10) << getSmin()   << endl;
-  cout << " | PlanckB        : " << setw(10) << getPlanckB()
-       << " | RAWrefl        : " << setw(10) << getRAWrefl()   
+  cout << " | PlanckR1       : " << setw(10) << planckr1
+       << " | RAWmax         : " << setw(10) << rawmax
+       << " | Tmin    : "        << setw(10) << tmin
+       << " | Smax    : "        << setw(10) << smax   << endl;
+  cout << " | PlanckR2       : " << setw(10) << planckr2
+       << " | RAWmin         : " << setw(10) << rawmin    
+       << " | Tmax    : "        << setw(10) << tmax
+       << " | Smin    : "        << setw(10) << smin   << endl;
+  cout << " | PlanckB        : " << setw(10) << planckb
+       << " | RAWrefl        : " << setw(10) << rawrefl   
        << setw(23) << ""
-       << " | Sdelta   : " << setw(10) << getSdelta() << endl;
-  cout << " | PlanckF        : " << setw(10) << getPlanckF()
-       << " | RAWmaxobj      : " << setw(10) << getRAWmaxobj() << endl;
-  cout << " | PlanckO        : " << setw(10) << getPlanckO()
-       << " | RAWminobj      : " << setw(10) << getRAWminobj() << endl;
-  cout << " | Tref           : " << setw(10) << getTref()           << endl;
-  cout << " | Emis           : " << setw(10) << getEmis()           << endl;
-  cout << " | RawValueMedian : " << setw(10) << getRAWvaluemedian() << endl;
-  cout << " | RawValueRange  : " << setw(10) << getRAWvaluerange()  << endl;
+       << " | Sdelta   : " << setw(10) << sdelta << endl;
+  cout << " | PlanckF        : " << setw(10) << planckf
+       << " | RAWmaxobj      : " << setw(10) << rawmaxobj << endl;
+  cout << " | PlanckO        : " << setw(10) << plancko
+       << " | RAWminobj      : " << setw(10) << rawminobj << endl;
+  cout << " | Tref           : " << setw(10) << tref           << endl;
+  cout << " | Emis           : " << setw(10) << emis           << endl;
+  cout << " | RawValueMedian : " << setw(10) << rawvaluemedian << endl;
+  cout << " | RawValueRange  : " << setw(10) << rawvaluerange  << endl;
 
 }

@@ -1,106 +1,140 @@
 #include "../inc/flirImg.hpp"
-#include "../inc/flirImgMetadata.hpp"
+#include "../inc/callbacks.hpp"
+#include <opencv2/highgui/highgui.hpp>
+using namespace cv;
+
+flirImg::flirImg()
+{
+  fmd     = NULL;
+  imgpath = "";
+  thermal_imgpath ="";
+  emsgs   = new ErrMsgs();
+  temperatures = NULL;
+}
+
 
 flirImg::flirImg(std::string imgpath)
 {
-  flirImgMetadata fmd(imgpath);
-
-
+  fmd = new flirImgMetadata(imgpath);
+  this->imgpath = imgpath;
+  this->thermal_imgpath=imgpath + std::string(".thermout.png");
 }
 
 void flirImg::printImageSummary()
 {
-  fmd.printImageSummary();
+  fmd->printImageSummary();
+}
+
+void flirImg::loadRAWThermalImage()
+{
+    // read image from file 
+    thermimg = imread(thermal_imgpath, IMREAD_ANYDEPTH);
+ 
+    // if fail to read the image
+    if ( thermimg.empty() ) { 
+      cout << emsgs->getThermalImgErrorMsg() << thermal_imgpath << endl;
+      exit;
+    } else{
+      cout << "Successfully read in "
+	   << thermal_imgpath << endl;
+    }
 }
 
 
-// void flirImg::extractRawThermaldata()
-// {
-//   //rawthermdataimagename   = imgpath + std::string(".rawthermout.png");
-//   std::string output;
-//   std::string fullstring;
+void flirImg::calcTempForEveryPixel()
+{
+  //this->getMetadata()->checkPlancks();
+  //this->getMetadata()->checkSmin();
+  //this->getMetadata()->checkSdelta();
 
-//   cout << "extracting raw thermal data";
+  int thermalvalue;
+  double calculatedTemp;
+
+  int rawthermalimgwidth = this->getMetadata()->getRAWThermalImageWidth();
+  int rawthermalimgheight=this->getMetadata()->getRAWThermalImageHeight();
+
+  //cout << " Width "<< rawthermalimgwidth  << endl;
+  //cout << " Height"<< rawthermalimgheight << endl;
+
+
   
-//   fullstring = extractThermalCmdString()
-//                +
-//                std::string(" | ")
-//                +
-//                convert2Grayscale16bitCmdString()
-//                +
-//                getTHERMimgpath();
-//   cout << fullstring;
+  temperatures = Mat::zeros(this->thermimg.size(), CV_64F);
+
+  for(int i=0; i<rawthermalimgwidth; i++){
+    for(int j=0; j<rawthermalimgheight; j++){
+      thermalvalue = (int)((this->thermimg).at<unsigned short>(j, i));
+      //cout << thermalvalue << endl;
+      calculatedTemp = this->getMetadata()->calcTempForOnePixel(thermalvalue);
+      temperatures.at<double>(j, i) = calculatedTemp;
+      //cout << temperatures.at<double>(j, i) << endl;
+    }
+  }
+}
+
+void flirImg::temperatureCallBackFunc(int event, int x, int y, int flags, void* param)
+{
+  double          calculatedTemp;
+  flirImg*        flirImgObject;
+  flirImgObject = (flirImg*) param;
+  Mat             pixelTemps;
+
+  pixelTemps    = flirImgObject->getPixelTemperatures();
+      
+  if( event == EVENT_LBUTTONDOWN ){
+    calculatedTemp = pixelTemps.at<double>(y, x);
+    cout << calculatedTemp << endl;
+  }
+  else if  ( event == EVENT_RBUTTONDOWN )
+  {
+    //cout << "Right button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+    //print50PixelsDiagnostics(flirImgParam);
+  }
+  else if  ( event == EVENT_MBUTTONDOWN )
+  {
+    //cout << "Middle button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+  }
+  else if ( event == EVENT_MOUSEMOVE )
+  {
+    //cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
+    calculatedTemp = pixelTemps.at<double>(y, x);
+    cout << calculatedTemp << endl;
+  }    
+}
+
+
+void flirImg::displayTooltippedImage()
+{
+  namedWindow("ThermalRAWimage", 1);
+  //namedWindow("ThermalRectangle",   1);
+  //namedWindow("ThermalPolyline",    1);
+  //namedWindow("ThermalBezierCurve", 1);
+
+  imshow("ThermalRAWimage",  this->thermimg);
+  //imshow("ThermalRectangle",   this->thermimg);
+  //imshow("ThermalPolyline",    this->thermimg);
+  //imshow("ThermalBezierCurve", this->thermimg);
   
-  
-//   output = exec(fullstring);
-//   cout << output << endl;
-//   //rawthermdataimgpath = rawthermdataimagename.c_str();
-// }
+  // set the callback function for any mouse event
+  setMouseCallback("ThermalRAWimage", flirImg::temperatureCallBackFunc, this);
+  //setMouseCallback("ThermalRectangle",   drawSelectionRectangle, this);
+  //setMouseCallback("ThermalPolyline",    drawSelectionPolyline,  this);
+  //setMouseCallback("ThermalBezierCurve", drawSelectionBezierCurve,    this);
 
 
 
-// double flirImg::calcTempForOnePixel(double thermalintensityvalue)
-// {
-//   //calcEverything();
-//   checkPlancks();
-//   checkSmin();
-//   checkSdelta();
-
-//   double t61, t62, t63, t64, t65, t66, t67;
-//   // just linearly mapped the thermal intensity values to a value between
-//   // rawminobj and rawmaxobj using
-//   // https://stackoverflow.com/questions/5731863/mapping-a-numeric-range-onto-another
-
-//   //cout << "ThermalIntensityValue " << thermalintensityvalue;
-//   t61 = rawminobj + ((rawmaxobj-rawminobj)/(65535))*(thermalintensityvalue);
-//   // cout << "t61 : " << t61 << endl;
-//   //t61 = 13900;
-//   t62 = t61 + plancko;
-//   t63 = planckr2 * t62;
-//   t64 = (planckr1/t63) + planckf;
-//   //t65 = planckb/log(t64) - smin;
-//   t65 = planckb/log(t64);
-//   //t66 = t65/sdelta;
-//   t66 = t65 - 273.15;
-
-//   return t66;
-// }
+  // wait until user press some key
+  waitKey(0);
+}
 
 
 
-// void flirImg::readRGBImage()
-// {
-//     // read image from file 
-//     opencvimg = imread(getRGBimgpath());
- 
-//     // if fail to read the image
-//     if ( opencvimg.empty() ) { 
-//       cout << getRGBimgErrorMsg() << getRGBimgpath() << endl;
-//       exit;
-//     } else{
-//       cout << "Successfully read in "
-// 	   << getRGBimgpath() << endl;
-//     }
-    
-//     //return opencvimg;
-// }
 
-// void flirImg::readThermalImage()
-// {
-//     // read image from file 
-//     thermimg = imread(getTHERMimgpath(), IMREAD_ANYDEPTH);
- 
-//     // if fail to read the image
-//     if ( thermimg.empty() ) { 
-//       cout << getThermalimgErrorMsg() << getTHERMimgpath() << endl;
-//       exit;
-//     } else{
-//       cout << "Successfully read in "
-// 	   << getTHERMimgpath() << endl;
-//     }
-    
-//     //return thermimg;
-// }
+
+
+
+
+
+
 
 // // this is a diagnostic thang
 // void flirImg::writeThermalImageAsDiagnostic()
@@ -119,52 +153,4 @@ void flirImg::printImageSummary()
 
 
 // }
-
-// void flirImg::readPHPImage()
-// {
-//     // // read image from file 
-//     // phpimg = imread(getPHPimgpath());
- 
-//     // // if fail to read the image
-//     // if ( phpimg.empty() ) { 
-//     //   cout << getPHPimgErrorMsg() << getPHPimgpath() << endl;
-//     //   exit;
-//     // } else{
-//     //   cout << "Successfully read in "
-//     // 	   << getPHPimgpath() << endl;
-//     // }
-    
-//     // //return thermimg;
-// }
-
-// void printPixelDiagnostics(int coord_x, int coord_y,
-// 			   int thermalintensityvalue,
-// 			   double calculatedTemp)
-// {
-//   cout << setw(5)
-//        <<" ("
-//        << coord_x << ", "
-//        << coord_y << ")  "
-//        << "[ "        << thermalintensityvalue    << " ]"
-//        << "[ Temp : " << calculatedTemp << " ]"
-//        << endl;
-// }
-
-// void print50PixelsDiagnostics(flirImg* flirImgParam)
-// {
-//   Mat thermmat = flirImgParam->getThermImgMat();
-//   int thermalvalue;
-//   double calculatedTemp;
-  
-//   int j=24;
-//   for(int i=200; i<=250; i++){
-//     thermalvalue = (int)((thermmat).at<unsigned short>(j, i));
-//     //cout << thermalvalue << endl;
-//     calculatedTemp = flirImgParam->calcTemp(thermalvalue);
-//     printPixelDiagnostics(i, j, thermalvalue, calculatedTemp);
-//   }
-
-// }
-
-
 

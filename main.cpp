@@ -1,27 +1,25 @@
-#include "inc/flirImg.hpp"
-#include "inc/readImage.hpp"
-#include "inc/printStuff.hpp"
-#include "inc/displayStuff.hpp"
+//#include "inc/flirImg.hpp"
+#include "inc/cmdstrings.hpp"
+#include "inc/exec.hpp"
+
+//#include "inc/readImage.hpp"
+//#include "inc/printStuff.hpp"
+//#include "inc/displayStuff.hpp"
 
 int main()
 {
-  flirImg fimg("/home/eicossa/Dropbox/dset/nabtd-images/FLIR1097/FLIR1097.jpg");
-  fimg.printImageSummary();
-  //fimg.printImageSummary();
-  //fimg.processTempdata();
-  //fimg.storeImageData();
-  //fimg.displayTooltippedImage();
+  flirImg* fimg;
+  fimg = new flirImg("/home/eicossa/Dropbox/dset/nabtd-images/FLIR1097/FLIR1097.jpg");
+  fimg->printImageSummary();
+  cmdStrings cmdstringer(fimg);
+  std::string extractThermalImageCmdString;
+  extractThermalImageCmdString = cmdstringer.getExtractThermalCmdString();
+  cout << extractThermalImageCmdString << endl;
+  exec(extractThermalImageCmdString);
+  fimg->loadRAWThermalImage();
+  fimg->calcTempForEveryPixel();
+  fimg->displayTooltippedImage();
 
-  
-  // read original image into memory
-  //img.readRGBImage();
-  // read and calculate metadata params
-  //img.readAndCalculateMetadata();
-  // print all metadata
-  //img.printAllMetadata();
-  //img.printImageSummary();
-  //img.calcTempForEveryPixel();
-  //img.displayTooltippedImage();
     
   return 0;
 }

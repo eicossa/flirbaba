@@ -4,7 +4,7 @@
 using namespace std;
 using namespace cv;
 
-class PathsErrmsgs{
+class Paths{
   std::string getRGBimgpath()
   {
     std::string path = "/home/eicossa/Dropbox/dset/nabtd-images/FLIR1097/FLIR1097.jpg";
@@ -28,24 +28,5 @@ class PathsErrmsgs{
     std::string path = "/home/eicossa/Dropbox/wtcd/flirbaba/ir.png";
     return path;
   }
-  
-  std::string getRGBimgErrorMsg()
-  {
-    std::string errmsg = "problem loading original FLIR img";
-    return errmsg;
-  }
-
-  std::string getThermalimgErrorMsg()
-  {
-    std::string errmsg = "problem loading thermal data from img";
-    return errmsg;
-  }
-
-  std::string getPHPimgErrorMsg()
-  {
-    std::string errmsg = "problem loading data from PHP img";
-    return errmsg;
-  }
-
-  std::string extractThermalCmdString();
 };
+

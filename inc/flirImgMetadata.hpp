@@ -1,3 +1,6 @@
+#ifndef FLIRIMGMETADATA_H_
+#define FLIRIMGMETADATA_H_
+
 #include <stdio.h>
 #include <iostream>
 #include <cstdio>
@@ -9,14 +12,10 @@
 #include "../inc/ExifTool.h"
 #include "../inc/utilfunc.hpp"
 
-#include <iostream>
-
 using namespace std;
 using namespace cv;
 
 class flirImgMetadata{
-
-  double readExiftoolTagInfo(std::string tagname);
   std::string imgpath;
 
   // read thermal metadata
@@ -32,6 +31,9 @@ class flirImgMetadata{
   double             tmin, tmax;
   double             smin, smax, sdelta;
 
+  // the workhorse image reader
+  double readExiftoolTagInfo(std::string tagname);
+  
   //reading methods
   void readThermalMetadata();
   void readBasicMetadata();
@@ -61,12 +63,19 @@ class flirImgMetadata{
   void               calcAllMetadata();
 
 public:
-  flirImgReadMetadata(std::string imgpath);
+  flirImgMetadata();
+  flirImgMetadata(std::string imgpath);
+
+  double calcTempForOnePixel(double thermalintensityvalue);
 
   void    printCalcedMetadata();
   void    printReadMetadata();
   void    printImageSummary();
 
+  int     getRAWThermalImageWidth(){return rawthermalimagewidth;}
+  int     getRAWThermalImageHeight(){return rawthermalimageheight;}
+
 };
 
 
+#endif

@@ -1,3 +1,5 @@
+#ifndef CMDSTRINGS_H_
+#define CMDSTRINGS_H_
 #include <iostream>
 #include <cstdio>
 #include <iostream>
@@ -5,7 +7,8 @@
 #include <stdexcept>
 #include <string>
 #include <array>
-#include "./datastructs/flirImg.hpp"
+
+#include "flirImg.hpp"
 //#include "../inc/getPaths.hpp"
 //#include "../inc/flirImg.hpp"
 //#include "../inc/utilfunc.hpp"
@@ -15,32 +18,66 @@ using namespace std;
 using namespace cv;
 
 class cmdStrings{
-  flirImg fimg;
-public:  
-  std::string convert2GrayscaleCmdString()
+  flirImg* fimg;
+  
+  
+public:
+  cmdStrings()
+  {
+    fimg = NULL;
+  }
+  
+  cmdStrings(flirImg* flimg)
+  {
+    this->fimg = flimg;
+  }
+  
+  std::string getConvert2GrayscaleCmdString()
   {
     std::string cmdString;
     cmdString = std::string("convert - grayscale: ");
     return cmdString;
   }
 
-  std::string convert2Grayscale16bitCmdString()
+  std::string getConvert2Grayscale16bitCmdString()
   {
     std::string cmdString;
+    int rawthermalimagewidth  = fimg->getMetadata()->getRAWThermalImageWidth();
+    int rawthermalimageheight = fimg->getMetadata()->getRAWThermalImageHeight();
+    
     cmdString = std::string("convert - -depth 16 -endian msb -auto-level -colorspace gray ")
                 + std::string(" -size ")
-                + std::to_string(getRAWThermalImageWidth())
+                + std::to_string(rawthermalimagewidth)
                 + std::string("x")
-                + std::to_string(getRAWThermalImageHeight())
+                + std::to_string(rawthermalimageheight)
                 + std::string(" ");
     return cmdString;
   }
 
-  std::string resizeImageCmdString()
+  std::string getExtractThermalCmdString()
   {
     std::string cmdString;
+    std::string orig_imgpath, therm_imgpath;
+
+    orig_imgpath  = fimg->getImgPath();
+    therm_imgpath = fimg->getThermalImgPath();
+    
+    
+    cmdString = std::string("exiftool ")
+                + orig_imgpath
+                + std::string(" -rawthermalimage -b ")
+                + std::string(" | ")
+                + getConvert2Grayscale16bitCmdString()
+                + therm_imgpath;
     return cmdString;
   }
+
+
+  // std::string resizeImageCmdString()
+  // {
+  //   std::string cmdString;
+  //   return cmdString;
+  // }
 
   // std::string flirImg::convert2GrayscaleMSBCmdString()
   // {
@@ -70,19 +107,13 @@ public:
   // }
 
 
-  std::string extractThermalCmdString()
-  {
-    std::string cmdString;
-    cmdString = std::string("exiftool ")
-                + getRGBimgpath()
-                + std::string(" -rawthermalimage -b ");
-    return cmdString;
-  }
 
-  std::string convert2GrayscaleCmdString();
-  std::string convert2Grayscale16bitCmdString();
-  std::string convert2GrayscaleMSBCmdString();
-  std::string convert2GrayscaleAutolevelledCmdString();
-  std::string convertThermal2Grayscale16MSBAutolevelCmdString();
-  std::string resizeImageCmdString();
+  // std::string convert2GrayscaleCmdString();
+  // std::string convert2Grayscale16bitCmdString();
+  // std::string convert2GrayscaleMSBCmdString();
+  // std::string convert2GrayscaleAutolevelledCmdString();
+  // std::string convertThermal2Grayscale16MSBAutolevelCmdString();
+  // std::string resizeImageCmdString();
 };
+
+#endif
