@@ -4,6 +4,14 @@
 - http://answers.opencv.org/question/191675/loading-raw-array-of-16-bit-integers-as-grayscale-image/
 - https://stackoverflow.com/questions/2763006/make-the-current-git-branch-a-master-branch
 - https://imagemagick.org/script/identify.php
+- https://www.learnopencv.com/convex-hull-using-opencv-in-python-and-c/
+- http://opencvexamples.blogspot.com/2013/10/basic-drawing-examples.html
+- https://www.programcreek.com/python/example/89415/cv2.fillPoly
+- https://docs.opencv.org/2.4/modules/imgproc/doc/structural_analysis_and_shape_descriptors.html
+- https://docs.opencv.org/2.4/doc/tutorials/imgproc/shapedescriptors/moments/moments.html
+- https://docs.opencv.org/3.4/dd/d49/tutorial_py_contour_features.html
+- https://stackoverflow.com/questions/11303960/opencv-how-to-find-pixels-within-a-polygon
+- https://docs.opencv.org/2.4/doc/tutorials/core/basic_geometric_drawing/basic_geometric_drawing.html
 * calc.php
 #+begin_src php
 #!/usr/bin/php
