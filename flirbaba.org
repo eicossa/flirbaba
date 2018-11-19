@@ -8,10 +8,15 @@
 - http://opencvexamples.blogspot.com/2013/10/basic-drawing-examples.html
 - https://www.programcreek.com/python/example/89415/cv2.fillPoly
 - https://docs.opencv.org/2.4/modules/imgproc/doc/structural_analysis_and_shape_descriptors.html
-- https://docs.opencv.org/2.4/doc/tutorials/imgproc/shapedescriptors/moments/moments.html
+
 - https://docs.opencv.org/3.4/dd/d49/tutorial_py_contour_features.html
 - https://stackoverflow.com/questions/11303960/opencv-how-to-find-pixels-within-a-polygon
 - https://docs.opencv.org/2.4/doc/tutorials/core/basic_geometric_drawing/basic_geometric_drawing.html
+- http://answers.opencv.org/question/66758/how-would-you-get-all-the-points-on-a-line/
+
+- https://docs.opencv.org/2.4/doc/tutorials/imgproc/shapedescriptors/moments/moments.html
+- https://docs.opencv.org/2.4/doc/tutorials/imgproc/shapedescriptors/bounding_rects_circles/bounding_rects_circles.html
+- https://docs.opencv.org/2.4/doc/tutorials/imgproc/shapedescriptors/point_polygon_test/point_polygon_test.html
 * calc.php
 #+begin_src php
 #!/usr/bin/php

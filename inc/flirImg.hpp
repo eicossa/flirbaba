@@ -7,6 +7,9 @@
 #include <opencv2/opencv.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
 #include "../inc/flirImgMetadata.hpp"
+#include <opencv2/highgui/highgui.hpp>
+#include "opencv2/imgproc/imgproc.hpp"
+
 #include "../inc/ErrMsgs.hpp"
 
 using namespace std;
@@ -28,6 +31,7 @@ class flirImg{
   //static bool rect_drawing;
   static void  drawSelectionRectangle(int, int, int, int, void*);
   static void  drawSelectionPolyline(int, int, int, int, void*);
+  static void  drawSelectionBezierCurve(int, int, int, int, void*);
 
 public:
   flirImg();
@@ -35,6 +39,11 @@ public:
   void printImageSummary();
   flirImgMetadata* getMetadata(){return fmd;}
   void loadRAWThermalImage();
+
+
+  void displayRectangleSelection();
+  void displayPolylineSelection();
+  void displayBezierSelection();
   void displayTooltippedImage();
   
   void   calcTempForEveryPixel();
