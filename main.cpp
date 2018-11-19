@@ -18,7 +18,10 @@ int main()
   exec(extractThermalImageCmdString);
   fimg->loadRAWThermalImage();
   fimg->calcTempForEveryPixel();
-  fimg->displayTooltippedImage();
+
+  fimg->displayPolylineSelection();
+  //fimg->displayTooltippedImage();
+  
 
     
   return 0;

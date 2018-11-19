@@ -11,6 +11,7 @@
 
 - https://docs.opencv.org/3.4/dd/d49/tutorial_py_contour_features.html
 - https://stackoverflow.com/questions/11303960/opencv-how-to-find-pixels-within-a-polygon
+- https://stackoverflow.com/questions/11132729/finding-length-of-contour-in-opencv
 - https://docs.opencv.org/2.4/doc/tutorials/core/basic_geometric_drawing/basic_geometric_drawing.html
 - http://answers.opencv.org/question/66758/how-would-you-get-all-the-points-on-a-line/
 
