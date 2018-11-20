@@ -233,7 +233,7 @@ void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* pa
       // 	     Size( tmp.cols - 25, tmp.rows - 25 ));
       resize(tmp,
 	     thermimage_copy,
-	     Size(0, 0),
+	     Size(),
 	     0.99, 0.99,
 	     INTER_LANCZOS4);
       tmp = thermimage_copy;
@@ -248,7 +248,7 @@ void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* pa
       // 	     Size( tmp.cols + 25, tmp.rows + 25 ));
       resize(tmp,
 	     thermimage_copy,
-	     Size(0, 0),
+	     Size(),
 	     1.01, 1.01,
 	     INTER_LANCZOS4);
 
