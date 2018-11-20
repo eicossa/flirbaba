@@ -30,7 +30,12 @@ class flirImg{
   //static Mat rect_thermimage_copy;
   //static bool rect_drawing;
   static void  drawSelectionRectangle(int, int, int, int, void*);
-  static void  drawSelectionPolyline(int, int, int, int, void*);
+
+  static double calcAvgTempWithinPolygon(Mat);
+  static int    calcAreaOfPolygon();
+  static void   fillUpPolygonIfNecessary();
+  static void   drawSelectionPolyline(int, int, int, int, void*);
+  
   static void  drawSelectionBezierCurve(int, int, int, int, void*);
 
 public:
@@ -40,10 +45,15 @@ public:
   flirImgMetadata* getMetadata(){return fmd;}
   void loadRAWThermalImage();
 
-
+  void displayRectangleWindow(Mat);
   void displayRectangleSelection();
+
+  static void displayPolylineWindow(Mat);
   void displayPolylineSelection();
+
+  void displayBezierWindow(Mat);
   void displayBezierSelection();
+  
   void displayTooltippedImage();
   
   void   calcTempForEveryPixel();

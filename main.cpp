@@ -21,9 +21,6 @@ int main()
 
   fimg->displayPolylineSelection();
   //fimg->displayTooltippedImage();
-  
-
-    
   return 0;
 }
 

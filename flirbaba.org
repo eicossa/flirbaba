@@ -18,6 +18,7 @@
 - https://docs.opencv.org/2.4/doc/tutorials/imgproc/shapedescriptors/moments/moments.html
 - https://docs.opencv.org/2.4/doc/tutorials/imgproc/shapedescriptors/bounding_rects_circles/bounding_rects_circles.html
 - https://docs.opencv.org/2.4/doc/tutorials/imgproc/shapedescriptors/point_polygon_test/point_polygon_test.html
+- https://docs.opencv.org/2.4/doc/tutorials/imgproc/pyramids/pyramids.html
 * calc.php
 #+begin_src php
 #!/usr/bin/php

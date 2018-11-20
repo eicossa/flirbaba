@@ -72,27 +72,36 @@ void flirImg::calcTempForEveryPixel()
 
 void flirImg::displayRectangleSelection()
 {
-  namedWindow("ThermalRectangle",   1);
-  imshow("ThermalRectangle",   this->thermimg);
-  setMouseCallback("ThermalRectangle", flirImg::drawSelectionRectangle, this);
+  namedWindow("Rectangle",   1);
+  imshow("Rectangle",   this->thermimg);
+  setMouseCallback("Rectangle", flirImg::drawSelectionRectangle, this);
 
   waitKey(0);
+}
+
+
+void flirImg::displayPolylineWindow(Mat img)
+{
+  imshow("Polyline", img);
 }
 
 void flirImg::displayPolylineSelection()
 {
-  namedWindow("ThermalPolyline",    1);
-  imshow("ThermalPolyline",    this->thermimg);
-  setMouseCallback("ThermalPolyline",  flirImg::drawSelectionPolyline, this);
+  namedWindow("Polyline",    1);
+  flirImg::displayPolylineWindow(this->thermimg);
+  //imshow("Polyline",    this->thermimg);
+  setMouseCallback("Polyline",  flirImg::drawSelectionPolyline, this);
 
   waitKey(0);
 }
 
+
+
 void flirImg::displayBezierSelection()
 {
-  namedWindow("ThermalBezierCurve", 1);
-  imshow("ThermalBezierCurve", this->thermimg);
-  setMouseCallback("ThermalBezierCurve", drawSelectionBezierCurve,    this);
+  namedWindow("Bezier", 1);
+  imshow("Bezier", this->thermimg);
+  setMouseCallback("Bezier", flirImg::drawSelectionBezierCurve,    this);
 
   waitKey(0);
 }
