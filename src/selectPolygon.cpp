@@ -9,7 +9,9 @@ static std::vector<Point> polyline_pts;
 
 
 static Mat         polyline_thermimage_copy;
-static Mat         thermimage_copy;
+static Mat         resized_thermimage_copy;
+static Mat         resized_nolines_thermimage_copy;
+//static Mat         thermimage_copy;
 static Mat         tmp;
 
 static bool        polyline_drawing;
@@ -111,15 +113,14 @@ double flirImg::calcAvgTempWithinPolygon(Mat pixelTemps)
 
 void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* param)
 {
-  flirImg*           flirImgObject;
-  Mat                thermimage;
-  flirImgObject    = (flirImg*) param;
-  thermimage       = flirImgObject->getThermalImgMat();
+  flirImg* flirImgObject = (flirImg*) param;
+  Mat      thermimage    = flirImgObject->getThermalImgMat();
+  //flirImgObject    = (flirImg*) param;
+  //thermimage       = flirImgObject->getThermalImgMat();
   //polyline_drawing_done = false;
-  Mat             pixelTemps;
-  pixelTemps      = flirImgObject->getPixelTemperatures();
+  Mat      pixelTemps    = flirImgObject->getPixelTemperatures();
 
-  cout << " ... Called again ... " << endl;
+  //cout << " ... Called again ... " << endl;
   //tmp             = thermimage;
   //thermimage_copy = thermimage;
   
@@ -128,7 +129,7 @@ void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* pa
     polyline_drawing_done = false;
     polyline_pts.clear();
     //imshow("Polyline", thermimage);
-    displayPolylineWindow(thermimage);
+    displayPolylineWindow(polyline_thermimage_copy);
   }
   else if ( event == EVENT_LBUTTONDOWN ){
     if(polyline_drawing){
@@ -136,14 +137,15 @@ void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* pa
       yet_another_p.y   = y;
       polyline_pts.push_back(yet_another_p);
       if( polyline_drawing ){
-	polyline_thermimage_copy = thermimage.clone();
+	
+	//polyline_thermimage_copy = thermimage.clone();
 	Mat all_ps(polyline_pts);
 	// check if atleasts points available
 	cv::polylines(polyline_thermimage_copy, all_ps, false, (0,255,0), 1);
 	//imshow("Polyline", polyline_thermimage_copy);
 	displayPolylineWindow(polyline_thermimage_copy);
 
-	polyline_thermimage_copy.release();
+	//polyline_thermimage_copy.release();
       }
     }
     else{
@@ -163,7 +165,7 @@ void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* pa
       // cout<<"... This contour is CONVEX AF!!!"<<endl;
       // Finish the figure by connecting the last point to the first point
       polyline_pts.push_back(polyline_pts.at(0));
-      polyline_thermimage_copy = thermimage.clone();
+      //polyline_thermimage_copy = thermimage.clone();
       Mat all_ps(polyline_pts);
       cv::polylines(polyline_thermimage_copy, all_ps, false, (0,255,0), 1);
 
@@ -177,7 +179,7 @@ void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* pa
       //imshow("Polyline", polyline_thermimage_copy);
       displayPolylineWindow(polyline_thermimage_copy);
       polyline_drawing_done = true;
-      polyline_thermimage_copy.release();
+      //polyline_thermimage_copy.release();
     }
     else{
       cout<<"... This contour is NOT CONVEX !!! ..."<<endl;
@@ -215,14 +217,14 @@ void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* pa
   else if ( event == EVENT_MOUSEWHEEL ){
     int mouseWheelDelta = getMouseWheelDelta(flags);
     if(!resized_once){
-      cout << " ... The first resize ... " << endl;
-      tmp             = thermimage;
-      thermimage_copy = thermimage;
-      resized_once    = true;
+      //cout << " ... The first resize ... " << endl;
+      tmp                      = thermimage.clone();
+      polyline_thermimage_copy = thermimage.clone();
+      resized_once             = true;
     }
     else{
-      cout << " ... Image has been resized once " << endl;
-      tmp = thermimage_copy;
+      //cout << " ... Image has been resized once " << endl;
+      tmp = polyline_thermimage_copy;
     }
     //tmp = thermimage_copy;
     //thermimage_copy = tmp;
@@ -232,11 +234,15 @@ void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* pa
       // 	     thermimage_copy,
       // 	     Size( tmp.cols - 25, tmp.rows - 25 ));
       resize(tmp,
-	     thermimage_copy,
+	     polyline_thermimage_copy,
 	     Size(),
 	     0.99, 0.99,
 	     INTER_LANCZOS4);
-      tmp = thermimage_copy;
+      cout << " +ve ( " << polyline_thermimage_copy.cols <<", "
+	                << polyline_thermimage_copy.rows << " )"
+	                << endl;
+      tmp = polyline_thermimage_copy;
+      
       // pyrDown(tmp,
       // 	      thermimage_copy,
       // 	      Size( tmp.cols/2, tmp.rows/2 ));
@@ -247,18 +253,21 @@ void flirImg::drawSelectionPolyline(int event, int x, int y, int flags, void* pa
       // 	     thermimage_copy,
       // 	     Size( tmp.cols + 25, tmp.rows + 25 ));
       resize(tmp,
-	     thermimage_copy,
+	     polyline_thermimage_copy,
 	     Size(),
 	     1.01, 1.01,
 	     INTER_LANCZOS4);
+      cout << " -ve ( " << polyline_thermimage_copy.cols <<", "
+	                << polyline_thermimage_copy.rows << " )"
+	                << endl;
 
-      tmp = thermimage_copy;
+      tmp = polyline_thermimage_copy;
       // pyrUp(tmp,
       // 	    thermimage_copy,
       // 	    Size( tmp.cols*2, tmp.rows*2 ));
     }
     //tmp = thermimage_copy;
     //imshow("Polyline", thermimage_copy);
-    displayPolylineWindow(thermimage_copy);
+    displayPolylineWindow(polyline_thermimage_copy);
   }
 }

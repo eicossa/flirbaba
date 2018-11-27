@@ -10,7 +10,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
 
-#include "../inc/ErrMsgs.hpp"
+#include "ErrMsgs.hpp"
+#include "bezier.hpp"
 
 using namespace std;
 using namespace cv;
@@ -36,7 +37,7 @@ class flirImg{
   static void   fillUpPolygonIfNecessary();
   static void   drawSelectionPolyline(int, int, int, int, void*);
   
-  static void  drawSelectionBezierCurve(int, int, int, int, void*);
+  static void   drawSelectionBezierCurve(int, int, int, int, void*);
 
 public:
   flirImg();
@@ -51,7 +52,7 @@ public:
   static void displayPolylineWindow(Mat);
   void displayPolylineSelection();
 
-  void displayBezierWindow(Mat);
+  static void displayBezierWindow(Mat);
   void displayBezierSelection();
   
   void displayTooltippedImage();

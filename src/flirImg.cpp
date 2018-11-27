@@ -81,9 +81,7 @@ void flirImg::displayRectangleSelection()
 
 
 void flirImg::displayPolylineWindow(Mat img)
-{
-  imshow("Polyline", img);
-}
+{  imshow("Polyline", img); }
 
 void flirImg::displayPolylineSelection()
 {
@@ -96,6 +94,9 @@ void flirImg::displayPolylineSelection()
 }
 
 
+
+void flirImg::displayBezierWindow(Mat img)
+{  imshow("Bezier", img); }
 
 void flirImg::displayBezierSelection()
 {

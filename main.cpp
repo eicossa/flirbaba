@@ -19,8 +19,12 @@ int main()
   fimg->loadRAWThermalImage();
   fimg->calcTempForEveryPixel();
 
-  fimg->displayPolylineSelection();
+
+  
+  //fimg->displayPolylineSelection();
+  fimg->displayBezierSelection();
   //fimg->displayTooltippedImage();
+  
   return 0;
 }
 
